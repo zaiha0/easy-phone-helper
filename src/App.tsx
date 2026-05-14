@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ErrorBoundary from './components/ErrorBoundary';
+import { FontSizeProvider } from './contexts/FontSizeContext';
 import Home from './pages/Home';
 import PhoneScreen from './pages/PhoneScreen';
 import MessageScreen from './pages/MessageScreen';
@@ -15,6 +16,7 @@ import NotFound from './pages/NotFound';
 
 function App() {
   return (
+    <FontSizeProvider>
     <ErrorBoundary>
       <BrowserRouter>
         <Routes>
@@ -33,6 +35,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </ErrorBoundary>
+    </FontSizeProvider>
   );
 }
 

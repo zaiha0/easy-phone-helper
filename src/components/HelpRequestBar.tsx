@@ -17,17 +17,16 @@ export default function HelpRequestBar({ guideTitle, aiContext }: Props) {
   const [modalOpen, setModalOpen] = useState(false);
   const [noGuardianOpen, setNoGuardianOpen] = useState(false);
 
+  const guardian = getGuardian();
+
   const handleHelp = () => {
     triggerHapticFeedback();
-    const guardian = getGuardian();
     if (!guardian) {
       setNoGuardianOpen(true);
       return;
     }
     setModalOpen(true);
   };
-
-  const guardian = getGuardian();
 
   return (
     <>

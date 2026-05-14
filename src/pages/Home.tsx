@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, type Variants } from 'framer-motion';
 import {
   Phone, MessageSquare, Image, Hospital,
-  BookOpen, ShieldAlert, Settings, HeartHandshake, Car,
+  BookOpen, ShieldAlert, Settings, HeartHandshake, Car, MapPin,
 } from 'lucide-react';
 import HelpRequestBar from '../components/HelpRequestBar';
 import { triggerHapticFeedback } from '../lib/haptics';
@@ -21,6 +21,7 @@ const mainButtons = [
   { label: '보호자 설정', icon: Settings, iconBg: '#FEF9C3', iconColor: '#CA8A04', route: '/guardian' },
   { label: '사기 문자\n확인', icon: ShieldAlert, iconBg: '#FEE2E2', iconColor: '#DC2626', route: '/scam-check' },
   { label: '택시 부르기', icon: Car, iconBg: '#FFEDD5', iconColor: '#EA580C', route: '/taxi-practice' },
+  { label: '병원/약국\n찾기', icon: MapPin, iconBg: '#FCE7F3', iconColor: '#DB2777', route: '/hospital' },
 ];
 
 const featuredVariants: Variants = {
