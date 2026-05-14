@@ -48,9 +48,9 @@ export default defineConfig(({ mode }) => {
       VitePWA({
         registerType: 'autoUpdate',
         manifest: {
-          name: '쉬운폰 도우미',
-          short_name: '쉬운폰',
-          description: '시니어를 위한 스마트폰 도우미',
+          name: '더이음',
+          short_name: '더이음',
+          description: '디지털 세상과 시니어를 더 긴밀하게 이어주는 앱',
           theme_color: '#2563eb',
           background_color: '#f8f9fa',
           display: 'standalone',

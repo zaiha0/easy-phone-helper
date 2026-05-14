@@ -1,4 +1,4 @@
-# 쉬운폰 도우미 (EasyPhone Helper) — CLAUDE.md
+# 더이음 — CLAUDE.md
 
 ## 프로젝트 목표
 

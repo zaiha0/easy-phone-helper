@@ -59,9 +59,9 @@ export default function Home() {
         style={{ background: 'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)' }}
       >
         <h1 className="font-extrabold text-white text-center" style={{ fontSize: '28px', letterSpacing: '-0.5px' }}>
-          쉬운폰 도우미
+          더이음
         </h1>
-        <p className="text-blue-200 text-center mt-1" style={{ fontSize: '16px' }}>무엇을 도와드릴까요?</p>
+        <p className="text-blue-200 text-center mt-1" style={{ fontSize: '16px' }}>디지털 세상과 나를 이어드릴게요</p>
       </motion.header>
 
       <main className="flex-1 px-4 space-y-5">

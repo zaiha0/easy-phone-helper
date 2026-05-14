@@ -15,7 +15,7 @@ export default function ConfirmModal({ open, guardianName, guardianPhone, guideT
     triggerHapticFeedback();
     const text = guideTitle
       ? `도움이 필요해요.\n지금 '${guideTitle}'에서 막혔어요.\n전화해 주세요.`
-      : '도움이 필요합니다. 쉬운폰 도우미 앱에서 도움 요청을 보냈습니다. 가능하면 전화해 주세요.';
+      : '도움이 필요합니다. 더이음 앱에서 도움 요청을 보냈습니다. 가능하면 전화해 주세요.';
     const body = encodeURIComponent(text);
     window.location.href = `sms:${guardianPhone}?body=${body}`;
     onClose();
