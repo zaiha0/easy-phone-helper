@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Search, Loader2, UserCheck, ShieldAlert } from 'lucide-react';
+import { ArrowLeft, Search, Loader2, UserCheck, ShieldAlert, AlertCircle } from 'lucide-react';
 import { checkScam } from '../lib/api';
 import { getGuardian } from '../lib/storage';
 import { openHelpSms } from '../lib/sms';
@@ -17,6 +17,7 @@ export default function ScamCheck() {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<ScamCheckResult | null>(null);
+  const [guardianError, setGuardianError] = useState('');
 
   const handleCheck = async () => {
     const trimmed = message.trim();
@@ -31,14 +32,15 @@ export default function ScamCheck() {
   const handleAskGuardian = () => {
     const guardian = getGuardian();
     if (!guardian) {
-      alert('보호자 연락처가 등록되어 있지 않아요.\n설정 화면에서 보호자 번호를 저장해 주세요.');
+      setGuardianError('보호자 연락처가 없어요. 설정에서 먼저 저장해 주세요.');
       return;
     }
+    setGuardianError('');
     openHelpSms(guardian, '사기 문자 확인');
   };
 
   return (
-    <div className="min-h-screen flex flex-col pb-32" style={{ background: 'linear-gradient(160deg, #fef2f2 0%, #f8f9fa 60%)' }}>
+    <div className="min-h-screen flex flex-col pb-52" style={{ background: 'linear-gradient(160deg, #fef2f2 0%, #f8f9fa 60%)' }}>
       <header className="px-4 pt-6 pb-4">
         <motion.div initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }}>
           <button
@@ -135,6 +137,19 @@ export default function ScamCheck() {
                 variant="warning"
                 fullWidth
               />
+              <AnimatePresence>
+                {guardianError && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    className="flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-2xl px-4 py-3"
+                  >
+                    <AlertCircle size={20} className="text-amber-500 flex-shrink-0" />
+                    <p className="text-amber-700 font-semibold" style={{ fontSize: '16px' }}>{guardianError}</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           )}
         </AnimatePresence>

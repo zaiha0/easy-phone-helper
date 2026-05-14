@@ -19,7 +19,7 @@ export default function GuideList() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col min-h-screen pb-24" style={{ background: 'linear-gradient(160deg, #eff6ff 0%, #f8f9fa 60%)' }}>
+    <div className="flex flex-col min-h-screen pb-36" style={{ background: 'linear-gradient(160deg, #eff6ff 0%, #f8f9fa 60%)' }}>
       <header className="px-4 pt-6 pb-4">
         <button
           onClick={() => navigate('/')}

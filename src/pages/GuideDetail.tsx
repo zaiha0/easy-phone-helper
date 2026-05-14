@@ -25,7 +25,7 @@ export default function GuideDetail() {
 
   if (done) {
     return (
-      <div className="min-h-screen flex flex-col pb-24" style={{ background: 'linear-gradient(160deg, #ecfdf5 0%, #f8f9fa 60%)' }}>
+      <div className="min-h-screen flex flex-col pb-52" style={{ background: 'linear-gradient(160deg, #ecfdf5 0%, #f8f9fa 60%)' }}>
         <header className="px-4 pt-6 pb-4">
           <h1 className="font-bold text-gray-700" style={{ fontSize: '20px' }}>{guide.title}</h1>
         </header>
@@ -83,7 +83,7 @@ export default function GuideDetail() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col pb-24" style={{ background: 'linear-gradient(160deg, #eff6ff 0%, #f8f9fa 60%)' }}>
+    <div className="min-h-screen flex flex-col pb-52" style={{ background: 'linear-gradient(160deg, #eff6ff 0%, #f8f9fa 60%)' }}>
       <header className="px-4 pt-6 pb-4">
         <button
           onClick={() => navigate(-1)}

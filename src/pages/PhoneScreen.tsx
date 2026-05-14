@@ -14,7 +14,7 @@ export default function PhoneScreen() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col min-h-screen pb-24" style={{ backgroundColor: '#FAF7F2' }}>
+    <div className="flex flex-col min-h-screen pb-52" style={{ backgroundColor: '#FAF7F2' }}>
       <header className="px-4 pt-6 pb-4">
         <button
           onClick={() => navigate('/')}
