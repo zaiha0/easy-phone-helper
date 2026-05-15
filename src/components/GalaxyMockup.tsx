@@ -482,7 +482,7 @@ export function ScamWarningMockup() {
 }
 
 export function GalleryHomeScreenMockup() {
-  return <PhoneFrame><HomeScreenBase highlightColor="#FF9F0A" highlightEmoji="🖼️" highlightPos={2} /></PhoneFrame>;
+  return <PhoneFrame><HomeScreenBase highlightColor="#FF9F0A" highlightEmoji="🖼️" highlightPos={3} /></PhoneFrame>;
 }
 
 export function GalleryGridMockup() {
