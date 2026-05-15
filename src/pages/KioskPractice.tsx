@@ -6,9 +6,12 @@ import HelpRequestBar from '../components/HelpRequestBar';
 import { triggerHapticFeedback } from '../lib/haptics';
 import { cafeScenario } from '../data/kioskScenarios';
 
+type Mode = 'select' | 'simple';
+
 export default function KioskPractice() {
   const navigate = useNavigate();
   const scenario = cafeScenario;
+  const [mode, setMode] = useState<Mode>('select');
   const [stepIndex, setStepIndex] = useState(0);
   const [feedback, setFeedback] = useState<{ correct: boolean; message: string } | null>(null);
   const [done, setDone] = useState(false);
@@ -37,8 +40,82 @@ export default function KioskPractice() {
     setStepIndex(0);
     setFeedback(null);
     setDone(false);
+    setMode('select');
   };
 
+  // ─── 선택 화면 ──────────────────────────────────────────────────────────
+  if (mode === 'select') {
+    return (
+      <div className="min-h-screen flex flex-col pb-24" style={{ backgroundColor: '#FAF7F2' }}>
+        <header className="px-4 pt-4 pb-3">
+          <button
+            onClick={() => navigate('/')}
+            className="flex items-center gap-1 text-gray-500 mb-4"
+            style={{ fontSize: '17px' }}
+          >
+            <ArrowLeft size={20} /> 홈으로
+          </button>
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 bg-orange-100 rounded-2xl flex items-center justify-center">
+              <Monitor size={28} className="text-orange-600" />
+            </div>
+            <h1 className="font-extrabold text-gray-900" style={{ fontSize: '24px' }}>
+              키오스크 연습
+            </h1>
+          </div>
+        </header>
+
+        <main className="flex-1 px-4 space-y-5 max-w-lg mx-auto w-full">
+          <p className="text-gray-600 leading-relaxed" style={{ fontSize: '18px' }}>
+            키오스크는 식당이나 카페에서 직접 주문하는 기계예요.{'\n'}
+            원하는 연습 방식을 골라보세요.
+          </p>
+
+          {/* 간단 연습 */}
+          <motion.button
+            whileTap={{ scale: 0.97 }}
+            onClick={() => setMode('simple')}
+            className="w-full bg-white border-2 border-orange-300 rounded-3xl p-5 text-left shadow-sm"
+            style={{ minHeight: '110px' }}
+          >
+            <div className="flex items-start gap-4">
+              <span style={{ fontSize: '40px' }}>☕</span>
+              <div>
+                <p style={{ fontSize: '22px', fontWeight: 'bold', color: '#1a1a1a' }}>
+                  간단 연습 (카페 음료 주문)
+                </p>
+                <p style={{ fontSize: '16px', color: '#6B7280', marginTop: '4px' }}>
+                  초보자용 — 큰 버튼으로 간단하게 연습해요
+                </p>
+              </div>
+            </div>
+          </motion.button>
+
+          {/* 심화 연습 */}
+          <motion.button
+            whileTap={{ scale: 0.97 }}
+            onClick={() => navigate('/kiosk-advanced')}
+            className="w-full bg-white border-2 border-yellow-400 rounded-3xl p-5 text-left shadow-sm"
+            style={{ minHeight: '110px' }}
+          >
+            <div className="flex items-start gap-4">
+              <span style={{ fontSize: '40px' }}>🍔</span>
+              <div>
+                <p style={{ fontSize: '22px', fontWeight: 'bold', color: '#1a1a1a' }}>
+                  심화 연습 (실제 키오스크처럼)
+                </p>
+                <p style={{ fontSize: '16px', color: '#6B7280', marginTop: '4px' }}>
+                  실제 패스트푸드 키오스크와 비슷한 화면으로 연습해요
+                </p>
+              </div>
+            </div>
+          </motion.button>
+        </main>
+      </div>
+    );
+  }
+
+  // ─── 간단 연습 완료 ─────────────────────────────────────────────────────
   if (done) {
     return (
       <div className="min-h-screen flex flex-col pb-24" style={{ backgroundColor: '#FAF7F2' }}>
@@ -84,6 +161,7 @@ export default function KioskPractice() {
     );
   }
 
+  // ─── 간단 연습 (카페 시나리오) ─────────────────────────────────────────
   const correctLabel = currentStep.options.find(o => o.id === currentStep.correctOptionId)?.label ?? '';
   const aiContext = `사용자가 카페 키오스크 연습 중이에요. 현재 단계: ${stepIndex + 1}/${scenario.steps.length} — "${currentStep.screenTitle}". 지금 화면에는 "${currentStep.options.map(o => o.label).join('", "')}" 버튼이 있어요. 정답은 "${correctLabel}" 버튼이에요. 도움말: ${currentStep.helpText}`;
 
@@ -96,11 +174,11 @@ export default function KioskPractice() {
 
       <header className="px-4 pt-4 pb-3">
         <button
-          onClick={() => navigate('/')}
+          onClick={() => setMode('select')}
           className="flex items-center gap-1 text-gray-500 mb-3"
           style={{ fontSize: '17px' }}
         >
-          <ArrowLeft size={20} /> 홈으로
+          <ArrowLeft size={20} /> 연습 선택으로
         </button>
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 bg-orange-100 rounded-2xl flex items-center justify-center">

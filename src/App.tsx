@@ -15,6 +15,7 @@ import ScamCheck from './pages/ScamCheck';
 import TaxiRealMode from './pages/TaxiRealMode';
 import Transport from './pages/Transport';
 import KioskPractice from './pages/KioskPractice';
+import KioskAdvanced from './pages/KioskAdvanced';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
           <Route path="/taxi-real" element={<TaxiRealMode />} />
           <Route path="/transport" element={<Transport />} />
           <Route path="/kiosk-practice" element={<KioskPractice />} />
+          <Route path="/kiosk-advanced" element={<KioskAdvanced />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
