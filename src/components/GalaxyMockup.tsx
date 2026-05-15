@@ -457,6 +457,132 @@ function PhotoBackScreen() {
 
 // ── 공개 exports ─────────────────────────────────────────────────────
 
+// ── 제스처 목업들 ─────────────────────────────────────────────────────
+
+function GestureTapScreen() {
+  return (
+    <div style={{ width: '100%', height: '100%', background: 'linear-gradient(160deg, #1B3D8A 0%, #2E6DD4 100%)', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ height: '14px', display: 'flex', alignItems: 'center', padding: '0 8px' }}>
+        <span style={{ color: 'white', fontSize: '5px', fontWeight: 'bold' }}>9:41</span>
+      </div>
+      <div style={{ flex: 1, padding: '8px 6px', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', alignContent: 'start' }}>
+        {Array.from({ length: 9 }).map((_, i) => (
+          <div key={i} style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
+            <div style={{ width: '26px', height: '26px', backgroundColor: i === 4 ? '#34C759' : 'rgba(255,255,255,0.2)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px' }}>
+              {i === 4 ? '📞' : ''}
+            </div>
+            {i === 4 && (
+              <div style={{ position: 'absolute', bottom: '-6px', right: '-2px', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.85)', border: '2px solid #FFD400', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '8px' }}>
+                👆
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      <div style={{ margin: '0 8px 10px', backgroundColor: 'rgba(255,255,255,0.15)', borderRadius: '8px', padding: '4px 6px', textAlign: 'center' }}>
+        <p style={{ fontSize: '5px', color: 'white', fontWeight: 'bold' }}>가볍게 한 번 눌러요</p>
+      </div>
+    </div>
+  );
+}
+
+function GestureScrollScreen() {
+  const rows = ['엄마', '병원', '은행', '친구'];
+  return (
+    <div style={{ width: '100%', height: '100%', backgroundColor: '#fff', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ height: '12px', backgroundColor: '#f5f5f5', display: 'flex', alignItems: 'center', padding: '0 6px' }}>
+        <span style={{ fontSize: '5px', color: '#333' }}>9:41</span>
+      </div>
+      <div style={{ padding: '4px 8px 2px', borderBottom: '1px solid #eee' }}>
+        <p style={{ fontSize: '7px', fontWeight: 'bold' }}>메시지</p>
+      </div>
+      <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
+        {rows.map((name, i) => (
+          <div key={i} style={{ padding: '5px 8px', borderBottom: '1px solid #f0f0f0', display: 'flex', gap: '5px', alignItems: 'center' }}>
+            <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#6C63FF', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '6px', color: 'white' }}>{name[0]}</div>
+            <div style={{ flex: 1 }}>
+              <p style={{ fontSize: '6px', fontWeight: 'bold', color: '#1a1a1a' }}>{name}</p>
+              <p style={{ fontSize: '4.5px', color: '#8E8E93' }}>안녕하세요...</p>
+            </div>
+          </div>
+        ))}
+        {/* 스크롤 손가락 */}
+        <div style={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
+          <span style={{ fontSize: '6px', color: '#6C63FF', fontWeight: 'bold' }}>↑</span>
+          <div style={{ width: '14px', height: '14px', borderRadius: '50%', backgroundColor: 'rgba(108,99,255,0.2)', border: '1.5px solid #6C63FF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '7px' }}>👆</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function GestureLongPressScreen() {
+  return (
+    <div style={{ width: '100%', height: '100%', background: 'linear-gradient(160deg, #1B3D8A 0%, #2E6DD4 100%)', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ height: '14px', display: 'flex', alignItems: 'center', padding: '0 8px' }}>
+        <span style={{ color: 'white', fontSize: '5px', fontWeight: 'bold' }}>9:41</span>
+      </div>
+      <div style={{ flex: 1, padding: '8px 6px', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', alignContent: 'start', position: 'relative' }}>
+        {Array.from({ length: 9 }).map((_, i) => (
+          <div key={i} style={{ display: 'flex', justifyContent: 'center' }}>
+            <div style={{ width: '26px', height: '26px', backgroundColor: i === 1 ? '#FF9F0A' : 'rgba(255,255,255,0.2)', borderRadius: '8px', fontSize: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              {i === 1 ? '📸' : ''}
+            </div>
+          </div>
+        ))}
+        {/* 길게 누르기 메뉴 팝업 */}
+        <div style={{ position: 'absolute', top: '30px', left: '28px', backgroundColor: 'white', borderRadius: '6px', padding: '3px 6px', boxShadow: '0 2px 8px rgba(0,0,0,0.3)', zIndex: 2 }}>
+          <p style={{ fontSize: '5px', color: '#1a1a1a', borderBottom: '1px solid #eee', paddingBottom: '2px', marginBottom: '2px' }}>삭제</p>
+          <p style={{ fontSize: '5px', color: '#1a1a1a' }}>이동</p>
+        </div>
+        <div style={{ position: 'absolute', top: '22px', left: '32px', width: '14px', height: '14px', borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.3)', border: '1.5px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '7px', zIndex: 3 }}>
+          👆
+        </div>
+      </div>
+      <div style={{ margin: '0 8px 10px', backgroundColor: 'rgba(255,255,255,0.15)', borderRadius: '8px', padding: '4px 6px', textAlign: 'center' }}>
+        <p style={{ fontSize: '5px', color: 'white', fontWeight: 'bold' }}>꾹 누르면 메뉴가 나와요</p>
+      </div>
+    </div>
+  );
+}
+
+function GestureBackScreen() {
+  return (
+    <div style={{ width: '100%', height: '100%', backgroundColor: '#fff', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ height: '12px', backgroundColor: '#f5f5f5', display: 'flex', alignItems: 'center', padding: '0 6px' }}>
+        <span style={{ fontSize: '5px', color: '#333' }}>9:41</span>
+      </div>
+      <div style={{ padding: '5px 8px 3px', borderBottom: '1px solid #eee', display: 'flex', alignItems: 'center', gap: '4px' }}>
+        <div style={{ width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#3B82F6', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '9px', color: 'white', fontWeight: 'bold', flexShrink: 0 }}>←</div>
+        <p style={{ fontSize: '7px', fontWeight: 'bold', color: '#3B82F6' }}>뒤로 가기</p>
+      </div>
+      <div style={{ flex: 1, padding: '8px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+        <div style={{ height: '8px', backgroundColor: '#f0f0f0', borderRadius: '4px' }} />
+        <div style={{ height: '8px', backgroundColor: '#f0f0f0', borderRadius: '4px', width: '80%' }} />
+        <div style={{ height: '8px', backgroundColor: '#f0f0f0', borderRadius: '4px', width: '60%' }} />
+      </div>
+      <div style={{ padding: '4px 8px 8px', textAlign: 'center' }}>
+        <p style={{ fontSize: '5px', color: '#6B7280' }}>← 버튼을 눌러 이전 화면으로</p>
+      </div>
+    </div>
+  );
+}
+
+export function GestureTapMockup() {
+  return <PhoneFrame><GestureTapScreen /></PhoneFrame>;
+}
+export function GestureScrollMockup() {
+  return <PhoneFrame><GestureScrollScreen /></PhoneFrame>;
+}
+export function GestureLongPressMockup() {
+  return <PhoneFrame><GestureLongPressScreen /></PhoneFrame>;
+}
+export function GestureBackMockup() {
+  return <PhoneFrame><GestureBackScreen /></PhoneFrame>;
+}
+
+// ── 공개 exports ─────────────────────────────────────────────────────
+
 export function PhoneHomeScreenMockup() {
   return <PhoneFrame><HomeScreenBase highlightColor="#34C759" highlightEmoji="📞" highlightPos={0} /></PhoneFrame>;
 }

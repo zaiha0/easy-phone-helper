@@ -16,6 +16,7 @@ import TaxiRealMode from './pages/TaxiRealMode';
 import Transport from './pages/Transport';
 import KioskPractice from './pages/KioskPractice';
 import KioskAdvanced from './pages/KioskAdvanced';
+import BasicOperations from './pages/BasicOperations';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
           <Route path="/transport" element={<Transport />} />
           <Route path="/kiosk-practice" element={<KioskPractice />} />
           <Route path="/kiosk-advanced" element={<KioskAdvanced />} />
+          <Route path="/basics" element={<BasicOperations />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

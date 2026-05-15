@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, X, Loader2 } from 'lucide-react';
+import { Sparkles, X, Loader2, Volume2, VolumeX } from 'lucide-react';
 import { fetchAiGuide } from '../lib/aiGuide';
 import { triggerHapticFeedback } from '../lib/haptics';
 
@@ -12,6 +12,7 @@ export default function AiHelpButton({ context }: Props) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [answer, setAnswer] = useState('');
+  const [speaking, setSpeaking] = useState(false);
 
   // context가 바뀌면 이전 캐시 초기화
   useEffect(() => {
@@ -29,7 +30,27 @@ export default function AiHelpButton({ context }: Props) {
   };
 
   const handleClose = () => {
+    window.speechSynthesis?.cancel();
+    setSpeaking(false);
     setOpen(false);
+  };
+
+  const handleSpeak = () => {
+    triggerHapticFeedback();
+    if (!answer || !window.speechSynthesis) return;
+    if (speaking) {
+      window.speechSynthesis.cancel();
+      setSpeaking(false);
+      return;
+    }
+    const utterance = new SpeechSynthesisUtterance(answer);
+    utterance.lang = 'ko-KR';
+    utterance.rate = 0.88;
+    utterance.pitch = 1.0;
+    utterance.onend = () => setSpeaking(false);
+    utterance.onerror = () => setSpeaking(false);
+    window.speechSynthesis.speak(utterance);
+    setSpeaking(true);
   };
 
   return (
@@ -97,11 +118,37 @@ export default function AiHelpButton({ context }: Props) {
                 <motion.div
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-violet-50 rounded-2xl p-4"
                 >
-                  <p className="text-gray-800 leading-relaxed" style={{ fontSize: '19px' }}>
-                    {answer}
-                  </p>
+                  <div className="bg-violet-50 rounded-2xl p-4 mb-3">
+                    <p className="text-gray-800 leading-relaxed" style={{ fontSize: '19px' }}>
+                      {answer}
+                    </p>
+                  </div>
+                  {/* 읽어주기 버튼 */}
+                  <motion.button
+                    whileTap={{ scale: 0.96 }}
+                    onClick={handleSpeak}
+                    className="w-full font-bold rounded-2xl flex items-center justify-center gap-2 border-2"
+                    style={{
+                      minHeight: '52px',
+                      fontSize: '18px',
+                      backgroundColor: speaking ? '#7C3AED' : '#F5F3FF',
+                      color: speaking ? 'white' : '#7C3AED',
+                      borderColor: '#7C3AED',
+                    }}
+                  >
+                    {speaking ? (
+                      <>
+                        <VolumeX size={22} />
+                        읽기 멈추기
+                      </>
+                    ) : (
+                      <>
+                        <Volume2 size={22} />
+                        글자 읽어주기
+                      </>
+                    )}
+                  </motion.button>
                 </motion.div>
               )}
 

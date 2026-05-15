@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, type Variants } from 'framer-motion';
 import {
   Phone, MessageSquare, Image, Hospital,
-  BookOpen, ShieldAlert, Settings, HeartHandshake, Car, MapPin, Bus, Monitor,
+  BookOpen, ShieldAlert, Settings, HeartHandshake, Car, MapPin, Bus, Monitor, Smartphone,
 } from 'lucide-react';
 import HelpRequestBar from '../components/HelpRequestBar';
 import { triggerHapticFeedback } from '../lib/haptics';
@@ -25,6 +25,7 @@ const mainButtons = [
   { label: '버스/지하철\n길찾기', icon: Bus, iconBg: '#DCFCE7', iconColor: '#16A34A', route: '/transport' },
   { label: '키오스크\n연습', icon: Monitor, iconBg: '#FFF7ED', iconColor: '#EA580C', route: '/kiosk-practice' },
   { label: '실제 택시\n부르기', icon: Car, iconBg: '#FEF9C3', iconColor: '#CA8A04', route: '/taxi-real' },
+  { label: '화면 조작법\n배우기', icon: Smartphone, iconBg: '#DBEAFE', iconColor: '#2563EB', route: '/basics' },
 ];
 
 const featuredVariants: Variants = {
