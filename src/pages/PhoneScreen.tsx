@@ -3,11 +3,27 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Phone, PhoneCall } from 'lucide-react';
 import HelpRequestBar from '../components/HelpRequestBar';
 import PressableButton from '../components/PressableButton';
+import { PhoneHomeScreenMockup, DialerMockup, CallButtonMockup } from '../components/GalaxyMockup';
 
 const steps = [
-  { num: 1, text: '초록색 전화 앱을 찾아요.', detail: '화면에서 전화기 모양 아이콘을 찾아 누르세요.' },
-  { num: 2, text: '숫자 버튼을 눌러요.', detail: '통화하고 싶은 번호를 하나씩 눌러요.' },
-  { num: 3, text: '초록 전화 버튼을 눌러요.', detail: '번호를 다 입력한 뒤 통화 버튼을 누르면 전화가 걸려요.' },
+  {
+    num: 1,
+    text: '초록색 전화 앱을 찾아요.',
+    detail: '화면에서 전화기 모양 아이콘을 찾아 누르세요.',
+    mockup: <PhoneHomeScreenMockup />,
+  },
+  {
+    num: 2,
+    text: '숫자 버튼을 눌러요.',
+    detail: '통화하고 싶은 번호를 하나씩 눌러요.',
+    mockup: <DialerMockup />,
+  },
+  {
+    num: 3,
+    text: '초록 전화 버튼을 눌러요.',
+    detail: '번호를 다 입력한 뒤 통화 버튼을 누르면 전화가 걸려요.',
+    mockup: <CallButtonMockup />,
+  },
 ];
 
 export default function PhoneScreen() {
@@ -50,18 +66,20 @@ export default function PhoneScreen() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="bg-white rounded-3xl shadow-sm border border-gray-100 p-5 flex gap-4 items-start"
+              className="bg-white rounded-3xl shadow-sm border border-gray-100 p-4 flex gap-4 items-center"
             >
-              <span
-                className="flex-shrink-0 w-10 h-10 bg-blue-600 text-white font-bold rounded-full
-                           flex items-center justify-center"
-                style={{ fontSize: '18px' }}
-              >
-                {step.num}
-              </span>
-              <div>
-                <p className="font-bold text-gray-900" style={{ fontSize: '21px' }}>{step.text}</p>
-                <p className="text-gray-500 mt-1 leading-relaxed" style={{ fontSize: '17px' }}>{step.detail}</p>
+              {step.mockup}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <span
+                    className="flex-shrink-0 w-7 h-7 bg-blue-600 text-white font-bold rounded-full flex items-center justify-center"
+                    style={{ fontSize: '15px' }}
+                  >
+                    {step.num}
+                  </span>
+                  <p className="font-bold text-gray-900 leading-tight" style={{ fontSize: '18px' }}>{step.text}</p>
+                </div>
+                <p className="text-gray-500 leading-relaxed" style={{ fontSize: '15px', paddingLeft: '36px' }}>{step.detail}</p>
               </div>
             </motion.div>
           ))}

@@ -4,12 +4,33 @@ import { ArrowLeft, Image } from 'lucide-react';
 import HelpRequestBar from '../components/HelpRequestBar';
 import PressableButton from '../components/PressableButton';
 import { triggerHapticFeedback } from '../lib/haptics';
+import { GalleryHomeScreenMockup, GalleryHighlightMockup, PhotoZoomMockup, PhotoBackMockup } from '../components/GalaxyMockup';
 
 const steps = [
-  { num: 1, text: '사진 앱을 열어요.', detail: '꽃 모양이나 사진 모양 아이콘을 찾아 눌러요.' },
-  { num: 2, text: '보고 싶은 사진을 눌러요.', detail: '사진을 한 번 누르면 크게 볼 수 있어요.' },
-  { num: 3, text: '손가락 두 개로 크게 볼 수 있어요.', detail: '두 손가락을 사진 위에 놓고 벌리면 더 크게 보여요.' },
-  { num: 4, text: '← 뒤로 가기를 눌러요.', detail: '다 봤으면 뒤로 가기를 눌러 목록으로 돌아와요.' },
+  {
+    num: 1,
+    text: '사진 앱을 열어요.',
+    detail: '꽃 모양이나 사진 모양 아이콘을 찾아 눌러요.',
+    mockup: <GalleryHomeScreenMockup />,
+  },
+  {
+    num: 2,
+    text: '보고 싶은 사진을 눌러요.',
+    detail: '사진을 한 번 누르면 크게 볼 수 있어요.',
+    mockup: <GalleryHighlightMockup />,
+  },
+  {
+    num: 3,
+    text: '손가락 두 개로 크게 볼 수 있어요.',
+    detail: '두 손가락을 사진 위에 놓고 벌리면 더 크게 보여요.',
+    mockup: <PhotoZoomMockup />,
+  },
+  {
+    num: 4,
+    text: '← 뒤로 가기를 눌러요.',
+    detail: '다 봤으면 뒤로 가기를 눌러 목록으로 돌아와요.',
+    mockup: <PhotoBackMockup />,
+  },
 ];
 
 function openGallery() {
@@ -66,18 +87,20 @@ export default function PhotoScreen() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="bg-white rounded-3xl shadow-sm border border-gray-100 p-5 flex gap-4 items-start"
+              className="bg-white rounded-3xl shadow-sm border border-gray-100 p-4 flex gap-4 items-center"
             >
-              <span
-                className="flex-shrink-0 w-10 h-10 bg-pink-500 text-white font-bold rounded-full
-                           flex items-center justify-center"
-                style={{ fontSize: '18px' }}
-              >
-                {step.num}
-              </span>
-              <div>
-                <p className="font-bold text-gray-900" style={{ fontSize: '21px' }}>{step.text}</p>
-                <p className="text-gray-500 mt-1 leading-relaxed" style={{ fontSize: '17px' }}>{step.detail}</p>
+              {step.mockup}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <span
+                    className="flex-shrink-0 w-7 h-7 bg-pink-500 text-white font-bold rounded-full flex items-center justify-center"
+                    style={{ fontSize: '15px' }}
+                  >
+                    {step.num}
+                  </span>
+                  <p className="font-bold text-gray-900 leading-tight" style={{ fontSize: '18px' }}>{step.text}</p>
+                </div>
+                <p className="text-gray-500 leading-relaxed" style={{ fontSize: '15px', paddingLeft: '36px' }}>{step.detail}</p>
               </div>
             </motion.div>
           ))}

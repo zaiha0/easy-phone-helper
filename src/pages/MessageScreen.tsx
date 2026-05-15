@@ -4,11 +4,27 @@ import { ArrowLeft, MessageSquare, ShieldAlert, AlertTriangle } from 'lucide-rea
 import HelpRequestBar from '../components/HelpRequestBar';
 import PressableButton from '../components/PressableButton';
 import { triggerHapticFeedback } from '../lib/haptics';
+import { MessageHomeScreenMockup, MessageListMockup, ScamWarningMockup } from '../components/GalaxyMockup';
 
 const steps = [
-  { num: 1, text: '문자 앱을 열어요.', detail: '화면에서 말풍선 모양의 문자 앱을 찾아 누르세요.' },
-  { num: 2, text: '받은 문자를 눌러요.', detail: '목록에서 읽고 싶은 문자를 눌러요.' },
-  { num: 3, text: '이상한 링크는 누르지 말아요.', detail: '모르는 번호에서 온 문자의 파란색 링크는 절대 누르지 마세요.' },
+  {
+    num: 1,
+    text: '문자 앱을 열어요.',
+    detail: '화면에서 말풍선 모양의 문자 앱을 찾아 누르세요.',
+    mockup: <MessageHomeScreenMockup />,
+  },
+  {
+    num: 2,
+    text: '받은 문자를 눌러요.',
+    detail: '목록에서 읽고 싶은 문자를 눌러요.',
+    mockup: <MessageListMockup />,
+  },
+  {
+    num: 3,
+    text: '이상한 링크는 누르지 말아요.',
+    detail: '모르는 번호에서 온 파란색 링크는 절대 누르지 마세요.',
+    mockup: <ScamWarningMockup />,
+  },
 ];
 
 export default function MessageScreen() {
@@ -50,18 +66,20 @@ export default function MessageScreen() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="bg-white rounded-3xl shadow-sm border border-gray-100 p-5 flex gap-4 items-start"
+              className="bg-white rounded-3xl shadow-sm border border-gray-100 p-4 flex gap-4 items-center"
             >
-              <span
-                className="flex-shrink-0 w-10 h-10 bg-violet-600 text-white font-bold rounded-full
-                           flex items-center justify-center"
-                style={{ fontSize: '18px' }}
-              >
-                {step.num}
-              </span>
-              <div>
-                <p className="font-bold text-gray-900" style={{ fontSize: '21px' }}>{step.text}</p>
-                <p className="text-gray-500 mt-1 leading-relaxed" style={{ fontSize: '17px' }}>{step.detail}</p>
+              {step.mockup}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <span
+                    className="flex-shrink-0 w-7 h-7 bg-violet-600 text-white font-bold rounded-full flex items-center justify-center"
+                    style={{ fontSize: '15px' }}
+                  >
+                    {step.num}
+                  </span>
+                  <p className="font-bold text-gray-900 leading-tight" style={{ fontSize: '18px' }}>{step.text}</p>
+                </div>
+                <p className="text-gray-500 leading-relaxed" style={{ fontSize: '15px', paddingLeft: '36px' }}>{step.detail}</p>
               </div>
             </motion.div>
           ))}
