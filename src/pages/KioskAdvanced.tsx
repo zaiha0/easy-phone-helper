@@ -46,7 +46,7 @@ const BULGOGI_OPTIONS: BulgogiOption[] = [
 
 // ─── 타입 ────────────────────────────────────────────────────────────────
 
-type Screen = 'language' | 'menu' | 'itemOptions' | 'cart' | 'payment' | 'complete';
+type Screen = 'language' | 'menu' | 'itemOptions' | 'cart' | 'payment' | 'cardInsert' | 'complete';
 
 interface CartItem {
   name: string;
@@ -62,6 +62,7 @@ const MISSION_TEXT: Record<Screen, string> = {
   itemOptions: "'세트'를 선택하고 확인을 눌러보세요.",
   cart: "'결제하기' 버튼을 눌러보세요.",
   payment: "'신용카드'를 눌러보세요.",
+  cardInsert: '카드 단말기에 신용카드를 꽂아 결제를 완료해 보세요.',
   complete: '주문 완료! 잘하셨어요.',
 };
 
@@ -70,7 +71,8 @@ const PROGRESS: Record<Screen, number> = {
   menu: 35,
   itemOptions: 55,
   cart: 75,
-  payment: 90,
+  payment: 88,
+  cardInsert: 95,
   complete: 100,
 };
 
@@ -98,7 +100,7 @@ export default function KioskAdvanced() {
   };
 
   const handleBack = () => {
-    const order: Screen[] = ['language', 'menu', 'itemOptions', 'cart', 'payment', 'complete'];
+    const order: Screen[] = ['language', 'menu', 'itemOptions', 'cart', 'payment', 'cardInsert', 'complete'];
     const idx = order.indexOf(screen);
     if (idx > 0) {
       setScreen(order[idx - 1]);
@@ -446,29 +448,167 @@ export default function KioskAdvanced() {
         <Header />
 
         <main className="flex-1 overflow-y-auto pb-32 flex flex-col items-center justify-center p-6 gap-6">
-          <p style={{ fontSize: '24px', fontWeight: 'bold', color: '#1a1a1a' }}>결제 수단을 선택해 주세요</p>
+          <div className="text-center">
+            <p style={{ fontSize: '22px', fontWeight: 'bold', color: '#1a1a1a' }}>결제 수단을 선택해 주세요</p>
+            <p style={{ fontSize: '15px', color: '#6B7280', marginTop: '6px' }}>이 키오스크는 카드 결제만 가능해요</p>
+          </div>
 
-          <div className="w-full max-w-sm space-y-4">
-            {/* 신용카드 */}
+          <div className="w-full max-w-sm">
+            {/* 신용카드 — 유일한 선택지 */}
             <button
-              onClick={() => setScreen('complete')}
-              className="w-full bg-white border-2 border-gray-200 rounded-2xl flex items-center justify-center gap-4 shadow-sm active:opacity-70"
-              style={{ minHeight: '100px' }}
+              onClick={() => setScreen('cardInsert')}
+              className="w-full bg-white border-4 rounded-2xl flex items-center justify-center gap-4 shadow-md active:opacity-70"
+              style={{ minHeight: '120px', borderColor: '#DC2626' }}
             >
-              <span style={{ fontSize: '44px' }}>💳</span>
-              <span style={{ fontSize: '24px', fontWeight: 'bold', color: '#1a1a1a' }}>신용카드</span>
-            </button>
-
-            {/* 현금 */}
-            <button
-              onClick={() => showToast('이번 연습에서는 신용카드를 선택해 보세요.')}
-              className="w-full bg-white border-2 border-gray-200 rounded-2xl flex items-center justify-center gap-4 shadow-sm active:opacity-70"
-              style={{ minHeight: '100px' }}
-            >
-              <span style={{ fontSize: '44px' }}>💵</span>
-              <span style={{ fontSize: '24px', fontWeight: 'bold', color: '#1a1a1a' }}>현금</span>
+              <span style={{ fontSize: '48px' }}>💳</span>
+              <div className="text-left">
+                <p style={{ fontSize: '24px', fontWeight: 'bold', color: '#1a1a1a' }}>신용카드</p>
+                <p style={{ fontSize: '14px', color: '#DC2626', fontWeight: 'bold', marginTop: '2px' }}>← 이것을 누르세요</p>
+              </div>
             </button>
           </div>
+
+          <div className="w-full max-w-sm bg-blue-50 border border-blue-200 rounded-2xl p-4">
+            <p style={{ fontSize: '16px', color: '#1D4ED8', fontWeight: 'bold' }}>
+              💡 실제 키오스크에서도 현금 결제는 대부분 안 돼요.<br />카드를 꼭 챙겨가세요!
+            </p>
+          </div>
+        </main>
+
+        <MissionBar />
+        <Toast />
+      </div>
+    );
+  }
+
+  // ─── 카드 투입 안내 화면 ────────────────────────────────────────────────
+  if (screen === 'cardInsert') {
+    return (
+      <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#FAF7F2' }}>
+        <div className="bg-amber-400 text-center py-1.5 font-bold text-amber-900" style={{ fontSize: '14px' }}>
+          연습 화면이에요 — 실제 결제되지 않아요
+        </div>
+        <Header />
+
+        <main className="flex-1 overflow-y-auto pb-36 p-5 flex flex-col gap-5">
+          {/* 제목 */}
+          <div className="text-center">
+            <p style={{ fontSize: '26px', fontWeight: 'bold', color: '#DC2626', lineHeight: 1.3 }}>
+              신용카드를
+            </p>
+            <p style={{ fontSize: '26px', fontWeight: 'bold', color: '#1a1a1a', lineHeight: 1.3 }}>
+              투입구에 꽂아주세요
+            </p>
+            <p style={{ fontSize: '15px', color: '#6B7280', marginTop: '6px' }}>
+              결제 오류 시 마그네틱을 아래로 향하게 꽂으세요
+            </p>
+          </div>
+
+          {/* 카드 단말기 일러스트 */}
+          <div className="flex flex-col items-center gap-3">
+            {/* 단말기 본체 */}
+            <div
+              className="flex flex-col items-center rounded-2xl shadow-lg"
+              style={{ backgroundColor: '#374151', width: '160px', padding: '16px 12px 20px' }}
+            >
+              {/* 화면 */}
+              <div
+                className="w-full rounded-lg flex items-center justify-center mb-3"
+                style={{ backgroundColor: '#1D4ED8', height: '56px' }}
+              >
+                <p style={{ color: 'white', fontSize: '13px', fontWeight: 'bold', textAlign: 'center', lineHeight: 1.3 }}>
+                  카드를<br />꽂아주세요
+                </p>
+              </div>
+              {/* 투입구 슬롯 */}
+              <div
+                className="w-full rounded-sm flex items-center justify-center mb-2"
+                style={{ backgroundColor: '#111827', height: '22px' }}
+              >
+                <p style={{ color: '#9CA3AF', fontSize: '10px', letterSpacing: '1px' }}>▼ 투입구 ▼</p>
+              </div>
+              {/* 카드가 꽂히는 모습 */}
+              <div
+                className="rounded"
+                style={{
+                  width: '100px',
+                  height: '64px',
+                  background: 'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 60%, #1E40AF 100%)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.4)',
+                  position: 'relative',
+                  border: '2px solid #60A5FA',
+                  transform: 'translateY(-8px)',
+                }}
+              >
+                {/* 카드 칩 */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    left: '10px',
+                    top: '10px',
+                    width: '24px',
+                    height: '18px',
+                    backgroundColor: '#FCD34D',
+                    borderRadius: '3px',
+                    border: '1px solid #D97706',
+                  }}
+                />
+                {/* 카드 번호 줄 */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: '12px',
+                    left: '10px',
+                    right: '10px',
+                    height: '5px',
+                    backgroundColor: 'rgba(255,255,255,0.4)',
+                    borderRadius: '2px',
+                  }}
+                />
+              </div>
+            </div>
+            {/* 화살표 안내 */}
+            <p style={{ fontSize: '13px', color: '#6B7280', textAlign: 'center' }}>
+              ↑ 단말기 투입구에 카드를 꽂으세요
+            </p>
+          </div>
+
+          {/* 순서 안내 */}
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 space-y-4">
+            <p style={{ fontSize: '18px', fontWeight: 'bold', color: '#1a1a1a' }}>카드 결제 순서</p>
+            {[
+              { step: '1', text: '카드 앞면이 위를 향하도록 잡으세요', sub: '긁는 면(마그네틱)이 아래를 향하게 하세요' },
+              { step: '2', text: '단말기 투입구에 카드를 끝까지 꽂으세요', sub: '투입구는 키오스크 오른쪽 또는 아래쪽에 있어요' },
+              { step: '3', text: '"삐" 소리가 나면 카드를 빼주세요', sub: '소리가 날 때까지 카드를 빼지 마세요' },
+              { step: '4', text: '영수증 출력 여부를 선택하세요', sub: '필요 없으면 "미출력"을 누르세요' },
+            ].map((item) => (
+              <div key={item.step} className="flex gap-3 items-start">
+                <div
+                  className="shrink-0 rounded-full flex items-center justify-center text-white font-bold"
+                  style={{ width: '32px', height: '32px', backgroundColor: '#DC2626', fontSize: '16px' }}
+                >
+                  {item.step}
+                </div>
+                <div>
+                  <p style={{ fontSize: '17px', fontWeight: 'bold', color: '#1a1a1a', lineHeight: 1.3 }}>
+                    {item.text}
+                  </p>
+                  <p style={{ fontSize: '14px', color: '#6B7280', marginTop: '2px' }}>
+                    {item.sub}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* 연습 완료 버튼 */}
+          <button
+            onClick={() => setScreen('complete')}
+            className="w-full text-white rounded-2xl font-bold"
+            style={{ backgroundColor: '#DC2626', minHeight: '72px', fontSize: '22px' }}
+          >
+            결제 완료 (연습 끝내기)
+          </button>
         </main>
 
         <MissionBar />
