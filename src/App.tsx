@@ -12,6 +12,9 @@ import GuideList from './pages/GuideList';
 import GuideDetail from './pages/GuideDetail';
 import GuardianSettings from './pages/GuardianSettings';
 import ScamCheck from './pages/ScamCheck';
+import TaxiRealMode from './pages/TaxiRealMode';
+import Transport from './pages/Transport';
+import KioskPractice from './pages/KioskPractice';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -31,6 +34,9 @@ function App() {
           <Route path="/guide/:id" element={<GuideDetail />} />
           <Route path="/guardian" element={<GuardianSettings />} />
           <Route path="/scam-check" element={<ScamCheck />} />
+          <Route path="/taxi-real" element={<TaxiRealMode />} />
+          <Route path="/transport" element={<Transport />} />
+          <Route path="/kiosk-practice" element={<KioskPractice />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, type Variants } from 'framer-motion';
 import {
   Phone, MessageSquare, Image, Hospital,
-  BookOpen, ShieldAlert, Settings, HeartHandshake, Car, MapPin,
+  BookOpen, ShieldAlert, Settings, HeartHandshake, Car, MapPin, Bus, Monitor,
 } from 'lucide-react';
 import HelpRequestBar from '../components/HelpRequestBar';
 import { triggerHapticFeedback } from '../lib/haptics';
@@ -20,8 +20,11 @@ const mainButtons = [
   { label: '가이드 목록', icon: BookOpen, iconBg: '#DCFCE7', iconColor: '#16A34A', route: '/guides' },
   { label: '보호자 설정', icon: Settings, iconBg: '#FEF9C3', iconColor: '#CA8A04', route: '/guardian' },
   { label: '사기 문자\n확인', icon: ShieldAlert, iconBg: '#FEE2E2', iconColor: '#DC2626', route: '/scam-check' },
-  { label: '택시 부르기', icon: Car, iconBg: '#FFEDD5', iconColor: '#EA580C', route: '/taxi-practice' },
+  { label: '택시 연습하기', icon: Car, iconBg: '#FFEDD5', iconColor: '#EA580C', route: '/taxi-practice' },
   { label: '병원/약국\n찾기', icon: MapPin, iconBg: '#FCE7F3', iconColor: '#DB2777', route: '/hospital' },
+  { label: '버스/지하철\n길찾기', icon: Bus, iconBg: '#DCFCE7', iconColor: '#16A34A', route: '/transport' },
+  { label: '키오스크\n연습', icon: Monitor, iconBg: '#FFF7ED', iconColor: '#EA580C', route: '/kiosk-practice' },
+  { label: '실제 택시\n부르기', icon: Car, iconBg: '#FEF9C3', iconColor: '#CA8A04', route: '/taxi-real' },
 ];
 
 const featuredVariants: Variants = {

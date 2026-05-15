@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, X, Loader2 } from 'lucide-react';
 import { fetchAiGuide } from '../lib/aiGuide';
@@ -12,6 +12,11 @@ export default function AiHelpButton({ context }: Props) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [answer, setAnswer] = useState('');
+
+  // context가 바뀌면 이전 캐시 초기화
+  useEffect(() => {
+    setAnswer('');
+  }, [context]);
 
   const handleOpen = async () => {
     triggerHapticFeedback();
@@ -85,7 +90,7 @@ export default function AiHelpButton({ context }: Props) {
                     <Loader2 size={36} className="text-violet-400" />
                   </motion.div>
                   <p className="text-gray-500 font-semibold" style={{ fontSize: '17px' }}>
-                    잠깐만요, 확인하고 있어요...
+                    잠시만요, 지금 화면을 보고 도와드릴게요.
                   </p>
                 </div>
               ) : (
@@ -109,6 +114,10 @@ export default function AiHelpButton({ context }: Props) {
               >
                 닫기
               </motion.button>
+
+              <p className="text-center text-gray-400 mt-3" style={{ fontSize: '13px' }}>
+                그래도 어렵다면 보호자에게 도움 요청을 눌러주세요.
+              </p>
             </motion.div>
           </>
         )}
