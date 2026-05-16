@@ -1,5 +1,22 @@
 import type { ScamCheckResult } from '../types';
 
+const CHAT_FALLBACK = '죄송해요, 지금 답변을 드리기 어려워요.';
+
+export async function chatWithAI(message: string): Promise<string> {
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message }),
+    });
+    if (!res.ok) return CHAT_FALLBACK;
+    const data = await res.json() as { answer?: string };
+    return data.answer ?? CHAT_FALLBACK;
+  } catch {
+    return CHAT_FALLBACK;
+  }
+}
+
 const FALLBACK: ScamCheckResult = {
   level: 'caution',
   summary: '지금은 분석을 할 수 없어요.',
