@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, type Variants } from 'framer-motion';
 import {
   Phone, MessageSquare, Image, Hospital,
-  BookOpen, ShieldAlert, Settings, Car, MapPin, Bus, Monitor, Smartphone,
+  BookOpen, ShieldAlert, Settings, Car, MapPin, Bus, Monitor, Smartphone, HeartHandshake,
 } from 'lucide-react';
 import HelpRequestBar from '../components/HelpRequestBar';
 import { triggerHapticFeedback } from '../lib/haptics';
@@ -30,6 +30,7 @@ const mainButtons = [
   { label: '사진 보기', icon: Image, iconBg: '#FDE8F3', iconColor: '#E91E63', route: '/photo' },
   // 배움
   { label: '화면 조작법\n배우기', icon: Smartphone, iconBg: '#DBEAFE', iconColor: '#2563EB', route: '/basics' },
+  { label: '카톡\n연습하기', icon: HeartHandshake, iconBg: '#FEF9C3', iconColor: '#EAB308', route: '/kakao-practice' },
   { label: '택시 연습하기', icon: Car, iconBg: '#FFEDD5', iconColor: '#EA580C', route: '/taxi-practice' },
   { label: '키오스크\n연습', icon: Monitor, iconBg: '#FFF7ED', iconColor: '#EA580C', route: '/kiosk-practice' },
   // 설정
