@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PhoneCall, Home, Mic, UserPlus, X, ZoomIn, ZoomOut } from 'lucide-react';
+import { PhoneCall, Home, Mic, UserPlus, X, ZoomIn } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { getGuardian } from '../lib/storage';
 import { triggerHapticFeedback } from '../lib/haptics';
 import { useMagnifier } from '../contexts/MagnifierContext';
 import ConfirmModal from './ConfirmModal';
 import VoiceAssistant from './VoiceAssistant';
+import MagnifierOverlay from './MagnifierOverlay';
 
 interface Props {
   guideTitle?: string;
@@ -56,26 +57,22 @@ export default function HelpRequestBar({ guideTitle }: Props) {
           left: '12px',
           width: '52px',
           height: '52px',
-          backgroundColor: magnifierOn ? '#2563EB' : 'rgba(255,255,255,0.96)',
-          border: magnifierOn ? 'none' : '1.5px solid rgba(0,0,0,0.10)',
+          backgroundColor: 'rgba(255,255,255,0.96)',
+          border: '1.5px solid rgba(0,0,0,0.10)',
           backdropFilter: 'blur(10px)',
-          transition: 'background-color 0.2s',
         }}
       >
-        {magnifierOn
-          ? <ZoomOut size={22} color="white" />
-          : <ZoomIn size={22} style={{ color: '#374151' }} />
-        }
+        <ZoomIn size={22} style={{ color: '#374151' }} />
         <span
           style={{
             fontSize: '9px',
             fontWeight: 700,
             lineHeight: 1,
             marginTop: '3px',
-            color: magnifierOn ? 'white' : '#6B7280',
+            color: '#6B7280',
           }}
         >
-          {magnifierOn ? '끄기' : '돋보기'}
+          돋보기
         </span>
       </motion.button>
 
@@ -211,6 +208,11 @@ export default function HelpRequestBar({ guideTitle }: Props) {
           onClose={() => setModalOpen(false)}
         />
       )}
+
+      {/* ── 돋보기 오버레이 ── */}
+      <AnimatePresence>
+        {magnifierOn && <MagnifierOverlay onClose={toggleMagnifier} />}
+      </AnimatePresence>
     </>
   );
 }

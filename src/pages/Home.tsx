@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, type Variants } from 'framer-motion';
 import {
   Phone, MessageSquare, Image, Hospital,
-  BookOpen, ShieldAlert, Settings, HeartHandshake, Car, MapPin, Bus, Monitor, Smartphone,
+  BookOpen, ShieldAlert, Settings, Car, MapPin, Bus, Monitor, Smartphone,
 } from 'lucide-react';
 import HelpRequestBar from '../components/HelpRequestBar';
 import { triggerHapticFeedback } from '../lib/haptics';
@@ -10,24 +10,32 @@ import { useFontSize } from '../contexts/FontSizeContext';
 import type { UserSettings } from '../types';
 
 const featuredGuides = [
-  { label: '문자 확인\n가이드', icon: MessageSquare, bg: 'from-orange-400 to-orange-500', route: '/message' },
-  { label: '병원/약국\n가이드', icon: Hospital, bg: 'from-red-400 to-rose-500', route: '/hospital' },
-  { label: '카톡\n연습하기', icon: HeartHandshake, bg: 'from-yellow-400 to-amber-400', route: '/kakao-practice' },
+  { label: '전화\n거는 법', icon: Phone, bg: 'from-blue-500 to-blue-600', route: '/phone' },
+  { label: '사기 문자\n확인하기', icon: ShieldAlert, bg: 'from-red-500 to-rose-600', route: '/scam-check' },
+  { label: '병원/약국\n찾기', icon: Hospital, bg: 'from-pink-500 to-rose-500', route: '/hospital' },
 ];
 
 const mainButtons = [
+  // 일상 필수
   { label: '전화하기', icon: Phone, iconBg: '#DBEAFE', iconColor: '#2563EB', route: '/phone' },
   { label: '문자 보기', icon: MessageSquare, iconBg: '#EDE9FE', iconColor: '#7C3AED', route: '/message' },
-  { label: '사진 보기', icon: Image, iconBg: '#FDE8F3', iconColor: '#E91E63', route: '/photo' },
-  { label: '가이드 목록', icon: BookOpen, iconBg: '#DCFCE7', iconColor: '#16A34A', route: '/guides' },
-  { label: '보호자 설정', icon: Settings, iconBg: '#FEF9C3', iconColor: '#CA8A04', route: '/guardian' },
+  // 안전
   { label: '사기 문자\n확인', icon: ShieldAlert, iconBg: '#FEE2E2', iconColor: '#DC2626', route: '/scam-check' },
-  { label: '택시 연습하기', icon: Car, iconBg: '#FFEDD5', iconColor: '#EA580C', route: '/taxi-practice' },
+  // 건강
   { label: '병원/약국\n찾기', icon: MapPin, iconBg: '#FCE7F3', iconColor: '#DB2777', route: '/hospital' },
-  { label: '버스/지하철\n길찾기', icon: Bus, iconBg: '#DCFCE7', iconColor: '#16A34A', route: '/transport' },
-  { label: '키오스크\n연습', icon: Monitor, iconBg: '#FFF7ED', iconColor: '#EA580C', route: '/kiosk-practice' },
+  // 이동
   { label: '실제 택시\n부르기', icon: Car, iconBg: '#FEF9C3', iconColor: '#CA8A04', route: '/taxi-real' },
+  { label: '버스/지하철\n길찾기', icon: Bus, iconBg: '#DCFCE7', iconColor: '#16A34A', route: '/transport' },
+  // 여가
+  { label: '사진 보기', icon: Image, iconBg: '#FDE8F3', iconColor: '#E91E63', route: '/photo' },
+  // 배움
   { label: '화면 조작법\n배우기', icon: Smartphone, iconBg: '#DBEAFE', iconColor: '#2563EB', route: '/basics' },
+  { label: '택시 연습하기', icon: Car, iconBg: '#FFEDD5', iconColor: '#EA580C', route: '/taxi-practice' },
+  { label: '키오스크\n연습', icon: Monitor, iconBg: '#FFF7ED', iconColor: '#EA580C', route: '/kiosk-practice' },
+  // 설정
+  { label: '보호자 설정', icon: Settings, iconBg: '#FEF9C3', iconColor: '#CA8A04', route: '/guardian' },
+  // 참고
+  { label: '가이드 목록', icon: BookOpen, iconBg: '#DCFCE7', iconColor: '#16A34A', route: '/guides' },
 ];
 
 const featuredVariants: Variants = {
