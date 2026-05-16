@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Save, Send, Shield, CheckCircle2, AlertCircle, Type } from 'lucide-react';
+import { ArrowLeft, Save, Send, Shield, CheckCircle2, AlertCircle } from 'lucide-react';
 import { getGuardian, setGuardian } from '../lib/storage';
 import { openHelpSms } from '../lib/sms';
 import PressableButton from '../components/PressableButton';
-import { useFontSize } from '../contexts/FontSizeContext';
 
 const inputClass =
   'w-full border-2 border-gray-200 focus:border-blue-400 rounded-2xl outline-none bg-white transition-colors';
@@ -22,7 +21,6 @@ export default function GuardianSettings() {
   const [saved, setSaved] = useState(false);
   const [saveError, setSaveError] = useState('');
   const [testError, setTestError] = useState('');
-  const { fontSize, setFontSize } = useFontSize();
 
   const handleSave = () => {
     if (!name.trim() || !phone.trim()) {
@@ -67,49 +65,6 @@ export default function GuardianSettings() {
       </header>
 
       <main className="flex-1 px-4 pb-8 space-y-5 max-w-lg mx-auto w-full">
-        {/* 글자 크기 설정 */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-3xl shadow-md p-5 space-y-4"
-        >
-          <div className="flex items-center gap-2">
-            <Type size={22} className="text-blue-600" />
-            <h2 className="font-bold text-gray-800" style={{ fontSize: '20px' }}>글자 크기</h2>
-          </div>
-          <div className="grid grid-cols-3 gap-3">
-            {([
-              { key: 'normal', label: '보통', preview: '가' },
-              { key: 'large', label: '크게', preview: '가' },
-              { key: 'xlarge', label: '매우\n크게', preview: '가' },
-            ] as const).map(({ key, label, preview }) => {
-              const previewSize = { normal: '20px', large: '26px', xlarge: '32px' }[key];
-              const isActive = fontSize === key;
-              return (
-                <motion.button
-                  key={key}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setFontSize(key)}
-                  className={`rounded-2xl border-2 py-4 flex flex-col items-center gap-1 font-bold transition-colors ${
-                    isActive
-                      ? 'border-blue-500 bg-blue-50 text-blue-700'
-                      : 'border-gray-200 bg-gray-50 text-gray-500'
-                  }`}
-                >
-                  <span style={{ fontSize: previewSize, lineHeight: 1 }}>{preview}</span>
-                  <span className="whitespace-pre-line text-center" style={{ fontSize: '14px' }}>{label}</span>
-                  {isActive && (
-                    <span className="text-blue-500" style={{ fontSize: '11px' }}>✓ 선택됨</span>
-                  )}
-                </motion.button>
-              );
-            })}
-          </div>
-          <p className="text-gray-400 text-center" style={{ fontSize: '14px' }}>
-            선택 즉시 적용돼요
-          </p>
-        </motion.div>
-
         <p className="font-bold text-gray-600" style={{ fontSize: '18px' }}>보호자 연락처</p>
         <p className="text-gray-500 leading-relaxed" style={{ fontSize: '17px' }}>
           도움이 필요할 때 연락할 분의 정보를 저장해 두세요.
