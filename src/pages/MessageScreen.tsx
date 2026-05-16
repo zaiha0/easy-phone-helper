@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, MessageSquare, ShieldAlert, AlertTriangle, ChevronLeft } from 'lucide-react';
+import { ArrowLeft, MessageSquare, ShieldAlert, AlertTriangle } from 'lucide-react';
 import HelpRequestBar from '../components/HelpRequestBar';
 import PressableButton from '../components/PressableButton';
 import { triggerHapticFeedback } from '../lib/haptics';
@@ -26,7 +26,7 @@ const iosSteps = [
 
 export default function MessageScreen() {
   const navigate = useNavigate();
-  const [platform, setPlatform] = useState<Platform | null>(null);
+  const [platform, setPlatform] = useState<Platform>('android');
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
   const steps = platform === 'android' ? androidSteps : iosSteps;
@@ -36,133 +36,96 @@ export default function MessageScreen() {
     <div className="flex flex-col min-h-screen pb-52" style={{ backgroundColor: '#FAF7F2' }}>
       <header className="px-4 pt-6 pb-4">
         <button
-          onClick={() => platform ? setPlatform(null) : navigate('/')}
+          onClick={() => navigate('/')}
           className="flex items-center gap-1 text-gray-500 mb-4"
           style={{ fontSize: '17px' }}
         >
-          <ArrowLeft size={20} /> {platform ? '기기 선택으로' : '홈으로'}
+          <ArrowLeft size={20} /> 홈으로
         </button>
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 bg-violet-100 rounded-2xl flex items-center justify-center">
             <MessageSquare size={28} className="text-violet-600" />
           </div>
-          <div>
-            <h1 className="font-extrabold text-gray-900" style={{ fontSize: '26px' }}>문자 보기</h1>
-            {platform && (
-              <button onClick={() => setPlatform(null)} className="flex items-center gap-0.5 text-violet-500" style={{ fontSize: '14px' }}>
-                <ChevronLeft size={14} />
-                {platform === 'android' ? '안드로이드' : 'iPhone'} 선택됨
-              </button>
-            )}
-          </div>
+          <h1 className="font-extrabold text-gray-900" style={{ fontSize: '26px' }}>문자 보기</h1>
         </div>
       </header>
 
       <main className="flex-1 px-4 space-y-4 max-w-lg mx-auto w-full">
+        {/* 플랫폼 토글 */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 px-4 py-3 flex items-center gap-3">
+          <span className="text-gray-500 font-medium flex-shrink-0" style={{ fontSize: '13px' }}>기기 종류</span>
+          <div className="flex gap-2 flex-1">
+            {(['android', 'ios'] as Platform[]).map((p) => (
+              <button
+                key={p}
+                onClick={() => { triggerHapticFeedback(); setPlatform(p); }}
+                className="flex-1 rounded-xl font-bold transition-all"
+                style={{
+                  height: '44px',
+                  fontSize: '15px',
+                  backgroundColor: platform === p ? accent : '#F3F4F6',
+                  color: platform === p ? 'white' : '#6B7280',
+                }}
+              >
+                {p === 'android' ? '🤖 안드로이드' : '🍎 아이폰'}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* 단계 카드 */}
         <AnimatePresence mode="wait">
-          {!platform ? (
-            <motion.div
-              key="selector"
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              className="space-y-4"
-            >
-              <div className="bg-violet-50 border border-violet-200 rounded-2xl p-4">
-                <p className="text-violet-800 font-semibold" style={{ fontSize: '19px' }}>
-                  내 스마트폰 종류를 골라주세요
-                </p>
-                <p className="text-violet-600 mt-1" style={{ fontSize: '15px' }}>
-                  기기에 맞는 설명을 보여드릴게요.
-                </p>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <motion.button
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setPlatform('android')}
-                  className="bg-white rounded-3xl shadow-md border-2 border-transparent hover:border-green-400 flex flex-col items-center justify-center gap-3 transition-all"
-                  style={{ minHeight: '140px' }}
-                >
-                  <div className="w-16 h-16 rounded-2xl bg-green-50 flex items-center justify-center" style={{ fontSize: '36px' }}>🤖</div>
-                  <div className="text-center">
-                    <p className="font-extrabold text-gray-900" style={{ fontSize: '18px' }}>안드로이드</p>
-                    <p className="text-gray-400" style={{ fontSize: '13px' }}>삼성 갤럭시 등</p>
+          <motion.div
+            key={platform}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.18 }}
+            className="space-y-3"
+          >
+            {steps.map((step, i) => (
+              <motion.div
+                key={step.num}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.08 }}
+                className="bg-white rounded-3xl shadow-sm border border-gray-100 p-4 flex gap-4 items-center"
+              >
+                {step.mockup}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="flex-shrink-0 w-7 h-7 text-white font-bold rounded-full flex items-center justify-center" style={{ fontSize: '15px', backgroundColor: accent }}>
+                      {step.num}
+                    </span>
+                    <p className="font-bold text-gray-900 leading-tight" style={{ fontSize: '18px' }}>{step.text}</p>
                   </div>
-                </motion.button>
-                <motion.button
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setPlatform('ios')}
-                  className="bg-white rounded-3xl shadow-md border-2 border-transparent hover:border-gray-400 flex flex-col items-center justify-center gap-3 transition-all"
-                  style={{ minHeight: '140px' }}
-                >
-                  <div className="w-16 h-16 rounded-2xl bg-gray-100 flex items-center justify-center" style={{ fontSize: '36px' }}>🍎</div>
-                  <div className="text-center">
-                    <p className="font-extrabold text-gray-900" style={{ fontSize: '18px' }}>아이폰</p>
-                    <p className="text-gray-400" style={{ fontSize: '13px' }}>Apple iPhone</p>
-                  </div>
-                </motion.button>
-              </div>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="steps"
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              className="space-y-4"
-            >
-              <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="bg-violet-50 border border-violet-200 rounded-2xl p-4">
-                <p className="text-violet-800 font-semibold leading-relaxed" style={{ fontSize: '19px' }}>
-                  {platform === 'android' ? '갤럭시' : 'iPhone'}에서 문자 확인하는 방법이에요.
-                </p>
+                  <p className="text-gray-500 leading-relaxed" style={{ fontSize: '15px', paddingLeft: '36px' }}>{step.detail}</p>
+                </div>
               </motion.div>
+            ))}
 
-              <div className="space-y-3">
-                {steps.map((step, i) => (
-                  <motion.div
-                    key={step.num}
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                    className="bg-white rounded-3xl shadow-sm border border-gray-100 p-4 flex gap-4 items-center"
-                  >
-                    {step.mockup}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="flex-shrink-0 w-7 h-7 text-white font-bold rounded-full flex items-center justify-center" style={{ fontSize: '15px', backgroundColor: accent }}>
-                          {step.num}
-                        </span>
-                        <p className="font-bold text-gray-900 leading-tight" style={{ fontSize: '18px' }}>{step.text}</p>
-                      </div>
-                      <p className="text-gray-500 leading-relaxed" style={{ fontSize: '15px', paddingLeft: '36px' }}>{step.detail}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex gap-3">
-                <AlertTriangle size={24} className="text-amber-600 flex-shrink-0 mt-0.5" />
-                <p className="text-amber-800 font-semibold leading-relaxed" style={{ fontSize: '17px' }}>
-                  모르는 번호에서 온 링크나 첨부파일은 절대 누르지 마세요.
-                </p>
-              </motion.div>
-
-              <PressableButton
-                label="문자 앱 열기"
-                icon={<MessageSquare size={26} />}
-                onClick={() => { triggerHapticFeedback(); window.location.href = 'sms:'; }}
-                variant="primary"
-                fullWidth
-              />
-              <PressableButton
-                label="사기 문자 확인하러 가기"
-                icon={<ShieldAlert size={26} />}
-                onClick={() => navigate('/scam-check')}
-                variant="danger"
-                fullWidth
-              />
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex gap-3">
+              <AlertTriangle size={24} className="text-amber-600 flex-shrink-0 mt-0.5" />
+              <p className="text-amber-800 font-semibold leading-relaxed" style={{ fontSize: '17px' }}>
+                모르는 번호에서 온 링크나 첨부파일은 절대 누르지 마세요.
+              </p>
             </motion.div>
-          )}
+
+            <PressableButton
+              label="문자 앱 열기"
+              icon={<MessageSquare size={26} />}
+              onClick={() => { triggerHapticFeedback(); window.location.href = 'sms:'; }}
+              variant="primary"
+              fullWidth
+            />
+            <PressableButton
+              label="사기 문자 확인하러 가기"
+              icon={<ShieldAlert size={26} />}
+              onClick={() => navigate('/scam-check')}
+              variant="danger"
+              fullWidth
+            />
+          </motion.div>
         </AnimatePresence>
       </main>
 

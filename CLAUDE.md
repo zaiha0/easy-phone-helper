@@ -2,12 +2,14 @@
 
 ## 기술 스택 (Tech Stack)
 
-- **언어**: TypeScript (strict 모드 — `any` 사용 금지)
+- **언어**: TypeScript (strict 모드 — `any` 사용 금지, 새 파일 기본값)
 - **프레임워크**: React 19 + Vite 8
 - **스타일**: Tailwind CSS v3 (인라인 style={{ }} 병행)
 - **애니메이션**: Framer Motion 12
 - **라우팅**: React Router DOM v6
+- **백엔드**: Vercel Functions (`/api`) — 서버리스, Node 20
 - **AI**: Groq API (llama-3.3-70b-versatile) — 서버리스 함수에서만 호출
+- **데이터 저장**: localStorage (MVP)
 - **배포**: GitHub (master 브랜치) → Vercel 자동 배포
 - **PWA**: vite-plugin-pwa
 
@@ -17,17 +19,6 @@
 
 스마트폰 사용이 어려운 시니어(65세 이상)를 위한 웹앱 MVP.
 큰 버튼, 단계별 가이드, 사기 문자 분석, 보호자 도움 요청 기능을 제공한다.
-
-## 기술 스택
-
-- 프론트엔드: React 19 + Vite + TypeScript
-- 스타일: Tailwind CSS v3
-- 라우팅: React Router DOM
-- PWA: vite-plugin-pwa
-- 백엔드: Vercel Functions (`/api`)
-- AI API: Groq API (llama-3.3-70b-versatile)
-- 데이터 저장: localStorage (MVP)
-- 배포: GitHub + Vercel
 
 ## 폴더 구조
 
@@ -87,8 +78,9 @@ npx vercel ls   # 최신 배포 상태 Ready 여부 확인
 ```
 
 > ⚠️ `git push` 후 Vercel 자동 배포가 트리거되지 않을 수 있음
-> → 변경사항이 반영되지 않으면 `npx vercel --prod` 로 수동 재배포
-> → `/deploy` 슬래시 명령어 사용 시 자동으로 위 절차 실행됨
+> → push 후 60초 내 Vercel 대시보드 또는 `npx vercel ls`로 상태 확인
+> → 자동 트리거 실패 시 즉시 `npx vercel --prod` 수동 실행
+> → `/deploy` 슬래시 명령어 사용 시 빌드→커밋→푸시→배포 확인 자동화됨
 
 ## 빌드 / 실행 명령어
 
