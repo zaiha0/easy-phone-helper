@@ -25,6 +25,11 @@ body {
 html.font-size-large { zoom: 1.18; }
 html.font-size-xlarge { zoom: 1.35; }
 
+/* 돋보기 확대 — 글자 크기와 조합 */
+html.magnifier-on { zoom: 1.5; }
+html.magnifier-on.font-size-large { zoom: 1.77; }
+html.magnifier-on.font-size-xlarge { zoom: 2.03; }
+
 * {
   box-sizing: border-box;
 }

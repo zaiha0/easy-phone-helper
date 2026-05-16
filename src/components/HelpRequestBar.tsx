@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PhoneCall, Home, Mic, UserPlus, X } from 'lucide-react';
+import { PhoneCall, Home, Mic, UserPlus, X, ZoomIn, ZoomOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { getGuardian } from '../lib/storage';
 import { triggerHapticFeedback } from '../lib/haptics';
+import { useMagnifier } from '../contexts/MagnifierContext';
 import ConfirmModal from './ConfirmModal';
 import VoiceAssistant from './VoiceAssistant';
 
@@ -17,8 +18,14 @@ export default function HelpRequestBar({ guideTitle }: Props) {
   const [modalOpen, setModalOpen] = useState(false);
   const [noGuardianOpen, setNoGuardianOpen] = useState(false);
   const [voiceOpen, setVoiceOpen] = useState(false);
+  const { magnifierOn, toggleMagnifier } = useMagnifier();
 
   const guardian = getGuardian();
+
+  const handleMagnifier = () => {
+    triggerHapticFeedback();
+    toggleMagnifier();
+  };
 
   const handleHelp = () => {
     triggerHapticFeedback();
@@ -38,6 +45,40 @@ export default function HelpRequestBar({ guideTitle }: Props) {
 
   return (
     <>
+      {/* ── 돋보기 버튼 (홈 버튼 위 좌측) ── */}
+      <motion.button
+        whileTap={{ scale: 0.88 }}
+        onClick={handleMagnifier}
+        aria-label={magnifierOn ? '돋보기 끄기' : '돋보기 켜기'}
+        className="fixed z-40 flex flex-col items-center justify-center rounded-full shadow-lg"
+        style={{
+          bottom: '88px',
+          left: '12px',
+          width: '52px',
+          height: '52px',
+          backgroundColor: magnifierOn ? '#2563EB' : 'rgba(255,255,255,0.96)',
+          border: magnifierOn ? 'none' : '1.5px solid rgba(0,0,0,0.10)',
+          backdropFilter: 'blur(10px)',
+          transition: 'background-color 0.2s',
+        }}
+      >
+        {magnifierOn
+          ? <ZoomOut size={22} color="white" />
+          : <ZoomIn size={22} style={{ color: '#374151' }} />
+        }
+        <span
+          style={{
+            fontSize: '9px',
+            fontWeight: 700,
+            lineHeight: 1,
+            marginTop: '3px',
+            color: magnifierOn ? 'white' : '#6B7280',
+          }}
+        >
+          {magnifierOn ? '끄기' : '돋보기'}
+        </span>
+      </motion.button>
+
       {/* ── 3버튼 하단 바 ── */}
       <div
         className="fixed bottom-0 left-0 right-0 z-40"
