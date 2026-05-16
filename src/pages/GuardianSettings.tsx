@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Save, Send, Shield, CheckCircle2, AlertCircle, Type } from 'lucide-react';
@@ -14,6 +14,7 @@ const isValidPhone = (p: string) => /^[0-9]{9,11}$/.test(p.replace(/[-\s]/g, '')
 
 export default function GuardianSettings() {
   const navigate = useNavigate();
+  useEffect(() => { window.scrollTo(0, 0); }, []);
   const existing = getGuardian();
   const [name, setName] = useState(existing?.name ?? '');
   const [phone, setPhone] = useState(existing?.phone ?? '');

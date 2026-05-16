@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, PartyPopper, RotateCcw, Home } from 'lucide-react';
@@ -10,6 +10,7 @@ import PressableButton from '../components/PressableButton';
 export default function GuideDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  useEffect(() => { window.scrollTo(0, 0); }, []);
   const guide = id ? getGuideById(id) : undefined;
   const [currentStep, setCurrentStep] = useState(0);
   const [done, setDone] = useState(false);

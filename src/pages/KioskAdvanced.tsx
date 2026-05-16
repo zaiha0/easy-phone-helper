@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // ─── 데이터 ────────────────────────────────────────────────────────────────
@@ -80,6 +80,7 @@ const PROGRESS: Record<Screen, number> = {
 
 export default function KioskAdvanced() {
   const navigate = useNavigate();
+  useEffect(() => { window.scrollTo(0, 0); }, []);
   const [screen, setScreen] = useState<Screen>('language');
   const [selectedCategory, setSelectedCategory] = useState('세트메뉴');
   const [selectedOption, setSelectedOption] = useState<string>('set');

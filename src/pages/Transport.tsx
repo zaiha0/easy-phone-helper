@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Bus, MapPin, Navigation, ExternalLink, Send, AlertCircle } from 'lucide-react';
@@ -19,6 +19,7 @@ const QUICK_PLACES = ['집', '병원', '시장', '복지관', '지하철역', '�
 
 export default function Transport() {
   const navigate = useNavigate();
+  useEffect(() => { window.scrollTo(0, 0); }, []);
   const [destination, setDestination] = useState('');
   const [geo, setGeo] = useState<GeoState>({});
 

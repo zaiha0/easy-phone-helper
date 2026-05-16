@@ -43,6 +43,7 @@ export default function TaxiRealMode() {
   const [destination, setDestination] = useState('');
   const [recentDests, setRecentDests] = useState<string[]>([]);
 
+  useEffect(() => { window.scrollTo(0, 0); }, []);
   useEffect(() => {
     setRecentDests(getRecent());
   }, []);

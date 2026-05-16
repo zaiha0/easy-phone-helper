@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Smartphone } from 'lucide-react';
@@ -55,6 +56,7 @@ const steps = [
 
 export default function BasicOperations() {
   const navigate = useNavigate();
+  useEffect(() => { window.scrollTo(0, 0); }, []);
 
   return (
     <div className="flex flex-col min-h-screen pb-36" style={{ backgroundColor: '#FAF7F2' }}>

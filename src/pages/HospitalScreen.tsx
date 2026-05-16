@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Hospital, MapPin, ExternalLink } from 'lucide-react';
@@ -23,6 +24,7 @@ const mapLinks = [
 
 export default function HospitalScreen() {
   const navigate = useNavigate();
+  useEffect(() => { window.scrollTo(0, 0); }, []);
 
   const handleOpen = (url: string) => {
     triggerHapticFeedback();

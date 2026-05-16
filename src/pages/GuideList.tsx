@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, type Variants } from 'framer-motion';
 import { ArrowLeft, ChevronRight, BookOpen } from 'lucide-react';
@@ -17,6 +18,7 @@ const item: Variants = {
 
 export default function GuideList() {
   const navigate = useNavigate();
+  useEffect(() => { window.scrollTo(0, 0); }, []);
 
   return (
     <div className="flex flex-col min-h-screen pb-36" style={{ background: 'linear-gradient(160deg, #eff6ff 0%, #f8f9fa 60%)' }}>

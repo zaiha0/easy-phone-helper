@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -345,6 +345,7 @@ const steps = [
 
 export default function TaxiPractice() {
   const navigate = useNavigate();
+  useEffect(() => { window.scrollTo(0, 0); }, []);
   const [currentStep, setCurrentStep] = useState(0);
   const [done, setDone] = useState(false);
 

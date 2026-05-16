@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Search, Loader2, UserCheck, ShieldAlert, AlertCircle } from 'lucide-react';
@@ -14,6 +14,7 @@ const MAX_LENGTH = 1500;
 
 export default function ScamCheck() {
   const navigate = useNavigate();
+  useEffect(() => { window.scrollTo(0, 0); }, []);
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<ScamCheckResult | null>(null);

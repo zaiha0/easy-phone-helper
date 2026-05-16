@@ -6,6 +6,8 @@ import {
 } from 'lucide-react';
 import HelpRequestBar from '../components/HelpRequestBar';
 import { triggerHapticFeedback } from '../lib/haptics';
+import { useFontSize } from '../contexts/FontSizeContext';
+import type { UserSettings } from '../types';
 
 const featuredGuides = [
   { label: '문자 확인\n가이드', icon: MessageSquare, bg: 'from-orange-400 to-orange-500', route: '/message' },
@@ -45,8 +47,17 @@ const gridItem: Variants = {
   show: { opacity: 1, y: 0, transition: { type: 'spring' as const, stiffness: 280, damping: 24 } },
 };
 
+type FontSize = UserSettings['fontSize'];
+
+const fontSizeOptions: { value: FontSize; label: string }[] = [
+  { value: 'normal', label: '가' },
+  { value: 'large', label: '가' },
+  { value: 'xlarge', label: '가' },
+];
+
 export default function Home() {
   const navigate = useNavigate();
+  const { fontSize, setFontSize } = useFontSize();
 
   const handleNav = (route: string) => {
     triggerHapticFeedback();
@@ -67,6 +78,31 @@ export default function Home() {
         </h1>
         <p className="text-blue-200 text-center mt-1" style={{ fontSize: '16px' }}>디지털 세상과 나를 이어드릴게요</p>
       </motion.header>
+
+      {/* 글자 크기 조절 바 */}
+      <div className="mx-4 mb-2">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 px-4 py-3 flex items-center gap-3">
+          <span className="text-gray-500 font-medium flex-shrink-0" style={{ fontSize: '13px' }}>글자 크기</span>
+          <div className="flex gap-2 flex-1">
+            {fontSizeOptions.map((opt, idx) => (
+              <button
+                key={opt.value}
+                onClick={() => { triggerHapticFeedback(); setFontSize(opt.value); }}
+                className="flex-1 rounded-xl font-bold transition-all border-2"
+                style={{
+                  fontSize: idx === 0 ? '14px' : idx === 1 ? '18px' : '22px',
+                  height: '44px',
+                  backgroundColor: fontSize === opt.value ? '#2563EB' : '#F3F4F6',
+                  color: fontSize === opt.value ? 'white' : '#6B7280',
+                  borderColor: fontSize === opt.value ? '#2563EB' : 'transparent',
+                }}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
 
       <main className="flex-1 px-4 space-y-5">
         <div>

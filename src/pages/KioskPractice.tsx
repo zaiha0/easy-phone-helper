@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Monitor, RotateCcw } from 'lucide-react';
@@ -10,6 +10,7 @@ type Mode = 'select' | 'simple';
 
 export default function KioskPractice() {
   const navigate = useNavigate();
+  useEffect(() => { window.scrollTo(0, 0); }, []);
   const scenario = cafeScenario;
   const [mode, setMode] = useState<Mode>('select');
   const [stepIndex, setStepIndex] = useState(0);
