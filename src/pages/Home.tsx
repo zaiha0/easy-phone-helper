@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, type Variants } from 'framer-motion';
 import {
   Phone, MessageSquare, Image, Hospital,
-  BookOpen, ShieldAlert, Settings, Car, MapPin, Bus, Monitor, Smartphone, HeartHandshake,
+  BookOpen, ShieldAlert, Settings, Car, MapPin, Bus, Monitor, Smartphone, HeartHandshake, Lightbulb,
 } from 'lucide-react';
 import HelpRequestBar from '../components/HelpRequestBar';
 import { triggerHapticFeedback } from '../lib/haptics';
@@ -19,6 +19,7 @@ const mainButtons = [
   // 일상 필수
   { label: '전화하기', icon: Phone, iconBg: '#DBEAFE', iconColor: '#2563EB', route: '/phone' },
   { label: '문자 보기', icon: MessageSquare, iconBg: '#EDE9FE', iconColor: '#7C3AED', route: '/message' },
+  { label: '손전등', icon: Lightbulb, iconBg: '#FEFCE8', iconColor: '#CA8A04', route: '/flash' },
   // 안전
   { label: '사기 문자\n확인', icon: ShieldAlert, iconBg: '#FEE2E2', iconColor: '#DC2626', route: '/scam-check' },
   // 건강
