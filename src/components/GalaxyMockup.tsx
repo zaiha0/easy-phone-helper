@@ -660,6 +660,171 @@ function IPhonePhotosScreen({ highlightOne = false }: { highlightOne?: boolean }
   );
 }
 
+// ── 화면 캡처 (스크린샷) ─────────────────────────────────────────────────
+function ScreenshotScreen() {
+  return (
+    <div style={{ width:'100%', height:'100%', position:'relative', overflow:'hidden' }}>
+      <div style={{ width:'100%', height:'100%', background:'linear-gradient(160deg,#051525 0%,#185A8C 100%)', display:'flex', flexDirection:'column' }}>
+        <div style={{ height:'14px', display:'flex', alignItems:'center', padding:'0 8px' }}>
+          <span style={{ color:'white', fontSize:'5px', fontWeight:'bold' }}>오전 10:30</span>
+        </div>
+        <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', flexDirection:'column', gap:'4px' }}>
+          <span style={{ fontSize:'18px' }}>🏠</span>
+          <span style={{ color:'rgba(255,255,255,0.7)', fontSize:'5px' }}>홈 화면</span>
+        </div>
+      </div>
+      {/* 캡처 테두리 flash */}
+      <div style={{ position:'absolute', inset:0, border:'2.5px solid white', borderRadius:'11px', opacity:0.85 }} />
+      {/* 캡처 완료 알림 */}
+      <div style={{ position:'absolute', bottom:'7px', left:'4px', right:'4px', backgroundColor:'white', borderRadius:'6px', padding:'4px 6px', boxShadow:'0 2px 8px rgba(0,0,0,0.3)' }}>
+        <p style={{ fontSize:'5px', color:'#1a1a1a', fontWeight:'bold' }}>📸 캡처 완료</p>
+        <p style={{ fontSize:'4px', color:'#8E8E93', marginTop:'1px' }}>갤러리에 저장됐어요</p>
+      </div>
+      {/* 버튼 표시 (전원 + 볼륨) */}
+      <div style={{ position:'absolute', right:'0', top:'28px', display:'flex', flexDirection:'column', gap:'6px' }}>
+        <div style={{ width:'3px', height:'10px', backgroundColor:'#FFD400', borderRadius:'2px 0 0 2px', opacity:0.9 }} />
+        <div style={{ width:'3px', height:'10px', backgroundColor:'#FFD400', borderRadius:'2px 0 0 2px', opacity:0.9 }} />
+      </div>
+    </div>
+  );
+}
+
+// ── 화면 밝기 조절 (알림창) ────────────────────────────────────────────────
+function BrightnessScreen() {
+  return (
+    <div style={{ width:'100%', height:'100%', position:'relative' }}>
+      <div style={{ width:'100%', height:'100%', background:'linear-gradient(160deg,#051525 0%,#185A8C 100%)' }} />
+      {/* 알림 그늘막 */}
+      <div style={{ position:'absolute', top:0, left:0, right:0, height:'95px', backgroundColor:'rgba(20,22,35,0.97)', borderRadius:'0 0 12px 12px', padding:'8px 7px 6px' }}>
+        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'8px' }}>
+          <span style={{ color:'white', fontSize:'5px', fontWeight:'bold' }}>오전 10:30</span>
+          <span style={{ color:'rgba(255,255,255,0.7)', fontSize:'5px' }}>🔋</span>
+        </div>
+        {/* 빠른 설정 아이콘 */}
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(5, 1fr)', gap:'3px', marginBottom:'7px' }}>
+          {['📶','📡','🔔','🔄','✈️'].map((icon, i) => (
+            <div key={i} style={{ height:'16px', backgroundColor:i===0?'rgba(37,99,235,0.6)':'rgba(255,255,255,0.12)', borderRadius:'6px', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'7px' }}>
+              {icon}
+            </div>
+          ))}
+        </div>
+        {/* 밝기 슬라이더 */}
+        <div style={{ display:'flex', alignItems:'center', gap:'4px' }}>
+          <span style={{ fontSize:'7px' }}>🌙</span>
+          <div style={{ flex:1, height:'7px', backgroundColor:'rgba(255,255,255,0.18)', borderRadius:'4px', overflow:'hidden', position:'relative' }}>
+            <div style={{ position:'absolute', left:0, top:0, bottom:0, width:'70%', background:'linear-gradient(90deg,#6366F1,#818CF8)', borderRadius:'4px' }} />
+          </div>
+          <span style={{ fontSize:'8px' }}>☀️</span>
+        </div>
+      </div>
+      {/* 손가락 + 화살표 */}
+      <div style={{ position:'absolute', top:'95px', left:'50%', transform:'translateX(-50%)', display:'flex', flexDirection:'column', alignItems:'center', gap:'1px' }}>
+        <span style={{ fontSize:'9px' }}>👆</span>
+        <span style={{ fontSize:'6px', color:'rgba(255,255,255,0.6)' }}>↑ 쓸어내렸어요</span>
+      </div>
+    </div>
+  );
+}
+
+// ── 소리 크기 조절 (볼륨 바) ───────────────────────────────────────────────
+function VolumeScreen() {
+  return (
+    <div style={{ width:'100%', height:'100%', position:'relative' }}>
+      <div style={{ width:'100%', height:'100%', background:'linear-gradient(160deg,#051525 0%,#185A8C 100%)', display:'flex', flexDirection:'column' }}>
+        <div style={{ height:'14px', display:'flex', alignItems:'center', padding:'0 8px' }}>
+          <span style={{ color:'white', fontSize:'5px', fontWeight:'bold' }}>오전 10:30</span>
+        </div>
+      </div>
+      {/* 볼륨 팝업 (우측 상단) */}
+      <div style={{ position:'absolute', top:'18px', right:'7px', backgroundColor:'rgba(255,255,255,0.95)', borderRadius:'10px', padding:'5px 4px', display:'flex', flexDirection:'column', alignItems:'center', gap:'3px', boxShadow:'0 3px 10px rgba(0,0,0,0.4)', width:'16px' }}>
+        <span style={{ fontSize:'7px' }}>🔊</span>
+        <div style={{ width:'4px', height:'52px', backgroundColor:'#e5e7eb', borderRadius:'2px', position:'relative', overflow:'hidden' }}>
+          <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'60%', backgroundColor:'#2563EB', borderRadius:'2px' }} />
+        </div>
+        <span style={{ fontSize:'5px', color:'#374151' }}>60</span>
+      </div>
+      {/* 볼륨 물리 버튼 표시 */}
+      <div style={{ position:'absolute', right:'0', top:'16px', display:'flex', flexDirection:'column', gap:'2px' }}>
+        <div style={{ width:'3px', height:'12px', background:'linear-gradient(180deg,#FFD400,#FFA500)', borderRadius:'2px 0 0 2px', boxShadow:'0 0 4px rgba(255,212,0,0.6)' }} />
+        <div style={{ width:'3px', height:'12px', background:'linear-gradient(180deg,#FFD400,#FFA500)', borderRadius:'2px 0 0 2px', boxShadow:'0 0 4px rgba(255,212,0,0.6)' }} />
+      </div>
+      <div style={{ position:'absolute', right:'5px', top:'14px', display:'flex', flexDirection:'column', gap:'2px' }}>
+        <p style={{ color:'rgba(255,255,255,0.7)', fontSize:'3.5px', textAlign:'right' }}>▲ 크게</p>
+        <p style={{ color:'rgba(255,255,255,0.7)', fontSize:'3.5px', textAlign:'right', marginTop:'8px' }}>▼ 작게</p>
+      </div>
+    </div>
+  );
+}
+
+// ── 화면 잠금 / 잠금 해제 ─────────────────────────────────────────────────
+function LockScreen() {
+  return (
+    <div style={{ width:'100%', height:'100%', background:'linear-gradient(180deg,#0F0C29 0%,#302B63 50%,#24243E 100%)', display:'flex', flexDirection:'column', alignItems:'center', position:'relative' }}>
+      <div style={{ display:'flex', justifyContent:'space-between', width:'100%', padding:'5px 8px 0' }}>
+        <span style={{ color:'rgba(255,255,255,0.7)', fontSize:'4.5px' }}>오전 10:30</span>
+        <span style={{ color:'rgba(255,255,255,0.7)', fontSize:'4.5px' }}>🔋</span>
+      </div>
+      {/* 시간 */}
+      <div style={{ flex:1, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'2px' }}>
+        <p style={{ color:'white', fontSize:'22px', fontWeight:700, lineHeight:1, letterSpacing:'-1px' }}>10:30</p>
+        <p style={{ color:'rgba(255,255,255,0.6)', fontSize:'4.5px' }}>2026년 5월 17일 일요일</p>
+        <div style={{ marginTop:'8px', fontSize:'14px' }}>🔒</div>
+        <p style={{ color:'rgba(255,255,255,0.5)', fontSize:'4px', marginTop:'2px' }}>밀어서 잠금 해제</p>
+      </div>
+      {/* 전원 버튼 강조 */}
+      <div style={{ position:'absolute', right:'0', top:'35px' }}>
+        <div style={{ width:'3px', height:'18px', background:'linear-gradient(180deg,#FFD400,#FFA500)', borderRadius:'2px 0 0 2px', boxShadow:'0 0 6px rgba(255,212,0,0.7)' }} />
+      </div>
+      <p style={{ position:'absolute', right:'5px', top:'38px', color:'rgba(255,255,255,0.6)', fontSize:'3.5px', textAlign:'right' }}>전원<br/>버튼</p>
+    </div>
+  );
+}
+
+// ── 앱 전환기 (최근 앱 / 멀티태스킹) ────────────────────────────────────
+function AppSwitcherScreen() {
+  const cards = [
+    { label:'카카오톡', bg:'#FEE500', symbol:'💬', fg:'#3A1D1D' },
+    { label:'문자',     bg:'#2196F3', symbol:'✉', fg:'white' },
+    { label:'갤러리',   bg:'#E91E8C', symbol:'🌸', fg:'white' },
+  ];
+  return (
+    <div style={{ width:'100%', height:'100%', backgroundColor:'#111', display:'flex', flexDirection:'column' }}>
+      <div style={{ height:'12px', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'0 8px' }}>
+        <span style={{ color:'rgba(255,255,255,0.7)', fontSize:'4.5px' }}>오전 10:30</span>
+        <span style={{ color:'rgba(255,255,255,0.5)', fontSize:'4.5px' }}>최근 앱</span>
+      </div>
+      {/* 앱 카드들 */}
+      <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:'5px', padding:'4px 5px' }}>
+        {cards.map((card, i) => (
+          <div key={i} style={{
+            width:'24px', height:'68px', backgroundColor:'#1E1E1E',
+            borderRadius:'7px', overflow:'hidden',
+            boxShadow: i===1 ? '0 0 0 1.5px #3B82F6, 0 4px 12px rgba(0,0,0,0.6)' : '0 2px 8px rgba(0,0,0,0.5)',
+            display:'flex', flexDirection:'column',
+          }}>
+            <div style={{ height:'12px', backgroundColor:card.bg, display:'flex', alignItems:'center', justifyContent:'center', gap:'2px' }}>
+              <span style={{ fontSize:'7px' }}>{card.symbol}</span>
+            </div>
+            <div style={{ flex:1, padding:'2px', display:'flex', flexDirection:'column', gap:'2px' }}>
+              {[70,90,55].map((w,j) => (
+                <div key={j} style={{ height:'4px', backgroundColor:'rgba(255,255,255,0.1)', borderRadius:'2px', width:`${w}%` }} />
+              ))}
+            </div>
+            <p style={{ color:'rgba(255,255,255,0.5)', fontSize:'3.5px', textAlign:'center', paddingBottom:'2px' }}>{card.label}</p>
+          </div>
+        ))}
+      </div>
+      {/* 위로 쓸기 안내 */}
+      <div style={{ padding:'0 0 8px', display:'flex', flexDirection:'column', alignItems:'center', gap:'1px' }}>
+        <div style={{ display:'flex', gap:'4px', alignItems:'center' }}>
+          <span style={{ fontSize:'6px' }}>☝️</span>
+          <span style={{ color:'rgba(255,255,255,0.5)', fontSize:'3.5px' }}>위로 밀면 앱 종료</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── 제스처 공개 exports ───────────────────────────────────────────────────
 export function GestureTapMockup() { return <PhoneFrame><GestureTapScreen /></PhoneFrame>; }
 export function GestureScrollMockup() { return <PhoneFrame><GestureScrollScreen /></PhoneFrame>; }
@@ -735,3 +900,10 @@ export function IPhonePhotoZoomMockup() {
 export function IPhonePhotoBackMockup() {
   return <IPhoneFrame><PhotoBackScreen /></IPhoneFrame>;
 }
+
+// ── 신규 기능 exports ─────────────────────────────────────────────────────
+export function ScreenshotMockup() { return <PhoneFrame><ScreenshotScreen /></PhoneFrame>; }
+export function BrightnessMockup() { return <PhoneFrame><BrightnessScreen /></PhoneFrame>; }
+export function VolumeMockup() { return <PhoneFrame><VolumeScreen /></PhoneFrame>; }
+export function LockScreenMockup() { return <PhoneFrame><LockScreen /></PhoneFrame>; }
+export function AppSwitcherMockup() { return <PhoneFrame><AppSwitcherScreen /></PhoneFrame>; }

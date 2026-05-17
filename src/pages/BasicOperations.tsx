@@ -9,6 +9,11 @@ import {
   GestureLongPressMockup,
   PhotoZoomMockup,
   GestureBackMockup,
+  ScreenshotMockup,
+  BrightnessMockup,
+  VolumeMockup,
+  LockScreenMockup,
+  AppSwitcherMockup,
 } from '../components/GalaxyMockup';
 
 const steps = [
@@ -52,6 +57,46 @@ const steps = [
     color: '#DC2626',
     mockup: <GestureBackMockup />,
   },
+  {
+    num: 6,
+    title: '화면 캡처 (스크린샷)',
+    desc: '전원 버튼과 소리 줄이기 버튼을 동시에 꾹 눌러요.',
+    tip: '화면이 번쩍이면 성공! 갤러리에 사진으로 저장돼요.',
+    color: '#0891B2',
+    mockup: <ScreenshotMockup />,
+  },
+  {
+    num: 7,
+    title: '화면 밝기 조절',
+    desc: '화면 맨 위에서 아래로 손가락을 쓸어내려요.',
+    tip: '밝기 막대가 나오면 손가락으로 밀어서 밝게·어둡게 조절해요.',
+    color: '#D97706',
+    mockup: <BrightnessMockup />,
+  },
+  {
+    num: 8,
+    title: '소리 크기 조절',
+    desc: '스마트폰 옆면에 있는 볼륨 버튼을 눌러요.',
+    tip: '위 버튼은 소리가 커지고, 아래 버튼은 소리가 작아져요.',
+    color: '#7C3AED',
+    mockup: <VolumeMockup />,
+  },
+  {
+    num: 9,
+    title: '화면 잠금 켜고 끄기',
+    desc: '옆면 전원 버튼을 한 번 누르면 화면이 켜지고 꺼져요.',
+    tip: '화면이 갑자기 꺼져도 걱정 마세요. 전원 버튼을 누르면 바로 다시 켜져요.',
+    color: '#059669',
+    mockup: <LockScreenMockup />,
+  },
+  {
+    num: 10,
+    title: '앱 완전히 끄기',
+    desc: "아래 네모(□) 버튼을 누르거나, 아래에서 위로 쓸어올려요.",
+    tip: '열려있는 앱들이 보여요. 앱을 위로 밀면 완전히 꺼져요. 핸드폰이 느릴 때 효과적이에요.',
+    color: '#DB2777',
+    mockup: <AppSwitcherMockup />,
+  },
 ];
 
 export default function BasicOperations() {
@@ -87,7 +132,7 @@ export default function BasicOperations() {
         >
           <p className="text-blue-800 font-semibold leading-relaxed" style={{ fontSize: '17px' }}>
             스마트폰은 손가락으로 화면을 직접 조작해요.{'\n'}
-            아래 5가지만 익히면 대부분의 앱을 쓸 수 있어요!
+            아래 10가지를 익히면 스마트폰이 훨씬 편해져요!
           </p>
         </motion.div>
 
