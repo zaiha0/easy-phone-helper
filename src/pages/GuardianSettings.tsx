@@ -22,6 +22,13 @@ export default function GuardianSettings() {
   const [saveError, setSaveError] = useState('');
   const [testError, setTestError] = useState('');
 
+  // setTimeout 클린업 — 언마운트 시 메모리 누수 방지
+  useEffect(() => {
+    if (!saved) return;
+    const id = setTimeout(() => setSaved(false), 2500);
+    return () => clearTimeout(id);
+  }, [saved]);
+
   const handleSave = () => {
     if (!name.trim() || !phone.trim()) {
       setSaveError('이름과 전화번호를 모두 입력해 주세요.');
@@ -34,7 +41,6 @@ export default function GuardianSettings() {
     setSaveError('');
     setGuardian({ name: name.trim(), phone: phone.trim(), relation: relation.trim() || undefined });
     setSaved(true);
-    setTimeout(() => setSaved(false), 2500);
   };
 
   const handleTest = () => {
@@ -60,7 +66,7 @@ export default function GuardianSettings() {
         </button>
         <div className="flex items-center gap-3">
           <Shield size={30} className="text-blue-600" />
-          <h1 className="font-extrabold text-gray-900" style={{ fontSize: '26px' }}>설정</h1>
+          <h1 className="font-extrabold text-gray-900" style={{ fontSize: '26px' }}>보호자 설정</h1>
         </div>
       </header>
 
@@ -76,8 +82,9 @@ export default function GuardianSettings() {
           className="bg-white rounded-3xl shadow-md p-5 space-y-4"
         >
           <div>
-            <label className="block font-bold text-gray-700 mb-2" style={{ fontSize: '19px' }}>이름</label>
+            <label htmlFor="guardian-name" className="block font-bold text-gray-700 mb-2" style={{ fontSize: '19px' }}>이름</label>
             <input
+              id="guardian-name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -88,8 +95,9 @@ export default function GuardianSettings() {
           </div>
 
           <div>
-            <label className="block font-bold text-gray-700 mb-2" style={{ fontSize: '19px' }}>전화번호</label>
+            <label htmlFor="guardian-phone" className="block font-bold text-gray-700 mb-2" style={{ fontSize: '19px' }}>전화번호</label>
             <input
+              id="guardian-phone"
               type="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
@@ -100,10 +108,11 @@ export default function GuardianSettings() {
           </div>
 
           <div>
-            <label className="block font-bold text-gray-700 mb-2" style={{ fontSize: '19px' }}>
+            <label htmlFor="guardian-relation" className="block font-bold text-gray-700 mb-2" style={{ fontSize: '19px' }}>
               관계 <span className="font-normal text-gray-400">(선택)</span>
             </label>
             <input
+              id="guardian-relation"
               type="text"
               value={relation}
               onChange={(e) => setRelation(e.target.value)}

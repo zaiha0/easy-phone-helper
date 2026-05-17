@@ -11,19 +11,22 @@ interface Props {
 }
 
 export default function ConfirmModal({ open, guardianName, guardianPhone, guideTitle, onClose }: Props) {
+  // 전화번호 sanitize — 숫자, +, -, 공백만 허용
+  const safePhone = guardianPhone.replace(/[^0-9+\-\s]/g, '');
+
   const handleSms = () => {
     triggerHapticFeedback();
     const text = guideTitle
       ? `도움이 필요해요.\n지금 '${guideTitle}'에서 막혔어요.\n전화해 주세요.`
       : '도움이 필요합니다. 더이음 앱에서 도움 요청을 보냈습니다. 가능하면 전화해 주세요.';
     const body = encodeURIComponent(text);
-    window.location.href = `sms:${guardianPhone}?body=${body}`;
+    window.location.href = `sms:${safePhone}?body=${body}`;
     onClose();
   };
 
   const handleCall = () => {
     triggerHapticFeedback();
-    window.location.href = `tel:${guardianPhone}`;
+    window.location.href = `tel:${safePhone}`;
     onClose();
   };
 
@@ -95,7 +98,7 @@ export default function ConfirmModal({ open, guardianName, guardianPhone, guideT
                            flex items-center justify-center transition-colors"
                 style={{ minHeight: '56px', fontSize: '18px' }}
               >
-                아니요, 취소할게요
+                괜찮아요, 안 보낼게요
               </motion.button>
             </div>
           </motion.div>

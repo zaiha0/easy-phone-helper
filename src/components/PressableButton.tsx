@@ -52,13 +52,13 @@ export default function PressableButton({
         rounded-2xl font-bold shadow-lg
         flex flex-col items-center justify-center gap-2
         disabled:opacity-40 disabled:cursor-not-allowed
-        select-none outline-none
+        select-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500
         ${className}
       `}
       style={{ minHeight: '72px', fontSize: '20px' }}
     >
       {icon && (
-        <span className="flex items-center justify-center" style={{ width: 32, height: 32 }}>
+        <span aria-hidden="true" className="flex items-center justify-center" style={{ width: 32, height: 32 }}>
           {icon}
         </span>
       )}

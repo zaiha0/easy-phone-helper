@@ -37,6 +37,8 @@ declare global {
 export default function ScamCheck() {
   const navigate = useNavigate();
   useEffect(() => { window.scrollTo(0, 0); }, []);
+  // SpeechRecognition 클린업 — 언마운트 시 자동 중지
+  useEffect(() => () => { recognitionRef.current?.stop(); }, []);
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<ScamCheckResult | null>(null);
@@ -90,9 +92,12 @@ export default function ScamCheck() {
     if (!trimmed) return;
     setLoading(true);
     setResult(null);
-    const res = await checkScam(trimmed);
-    setResult(res);
-    setLoading(false);
+    try {
+      const res = await checkScam(trimmed);
+      setResult(res);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleAskGuardian = () => {
@@ -201,9 +206,10 @@ export default function ScamCheck() {
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value.slice(0, MAX_LENGTH))}
+              aria-label="사기 의심 문자 내용 입력"
               placeholder={voiceSupported
-                ? '위 버튼을 눌러 말씀하시거나, 여기에 직접 입력하세요...'
-                : '여기에 문자 내용을 입력하세요...'}
+                ? '위 버튼을 눌러 말씀하시거나, 여기에 직접 입력하세요.'
+                : '여기에 문자 내용을 입력하세요.'}
               className="w-full border-2 border-gray-200 focus:border-blue-400 rounded-2xl p-4
                          outline-none resize-none leading-relaxed bg-white shadow-sm transition-colors"
               style={{ fontSize: '19px', minHeight: '140px', paddingRight: message ? '52px' : '16px' }}

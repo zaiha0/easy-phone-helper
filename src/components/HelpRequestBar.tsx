@@ -134,7 +134,7 @@ export default function HelpRequestBar({ guideTitle }: Props) {
             <div className="w-11 h-11 rounded-2xl flex items-center justify-center" style={{ backgroundColor: '#EEF2FF' }}>
               <Mic size={24} style={{ color: '#4F46E5' }} />
             </div>
-            <span className="font-bold" style={{ fontSize: '12px', color: '#4F46E5' }}>AI 비서</span>
+            <span className="font-bold" style={{ fontSize: '12px', color: '#4F46E5' }}>음성 도움</span>
           </motion.button>
 
         </div>

@@ -36,6 +36,7 @@ export async function checkScam(message: string): Promise<ScamCheckResult> {
     if (!res.ok) return FALLBACK;
 
     const data = await res.json();
+    if (!data || !['safe', 'caution', 'danger'].includes(data.level)) return FALLBACK;
     return data as ScamCheckResult;
   } catch {
     return FALLBACK;

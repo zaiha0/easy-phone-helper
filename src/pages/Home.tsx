@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, type Variants } from 'framer-motion';
 import {
@@ -59,20 +60,20 @@ const gridItem: Variants = {
 
 type FontSize = UserSettings['fontSize'];
 
-const fontSizeOptions: { value: FontSize; label: string }[] = [
-  { value: 'normal', label: '가' },
-  { value: 'large', label: '가' },
-  { value: 'xlarge', label: '가' },
+const fontSizeOptions: { value: FontSize; label: string; ariaLabel: string }[] = [
+  { value: 'normal', label: '가', ariaLabel: '글자 크기 보통' },
+  { value: 'large',  label: '가', ariaLabel: '글자 크기 크게' },
+  { value: 'xlarge', label: '가', ariaLabel: '글자 크기 매우 크게' },
 ];
 
 export default function Home() {
   const navigate = useNavigate();
   const { fontSize, setFontSize } = useFontSize();
 
-  const handleNav = (route: string) => {
+  const handleNav = useCallback((route: string) => {
     triggerHapticFeedback();
     navigate(route);
-  };
+  }, [navigate]);
 
   return (
     <div className="flex flex-col min-h-screen pb-24" style={{ backgroundColor: '#FAF7F2' }}>
@@ -98,6 +99,8 @@ export default function Home() {
               <button
                 key={opt.value}
                 onClick={() => { triggerHapticFeedback(); setFontSize(opt.value); }}
+                aria-label={opt.ariaLabel}
+                aria-pressed={fontSize === opt.value}
                 className="flex-1 rounded-xl font-bold transition-all border-2"
                 style={{
                   fontSize: idx === 0 ? '14px' : idx === 1 ? '18px' : '22px',
@@ -126,6 +129,7 @@ export default function Home() {
                   variants={featuredItem}
                   whileTap={{ scale: 0.93 }}
                   onClick={() => handleNav(guide.route)}
+                  aria-label={guide.label.replace(/\n/g, ' ')}
                   className={`bg-gradient-to-br ${guide.bg} rounded-2xl shadow-md
                               flex flex-col items-center justify-center gap-2 select-none`}
                   style={{ minHeight: '90px', padding: '12px 8px' }}
@@ -155,6 +159,7 @@ export default function Home() {
                   whileHover={{ scale: 1.02 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                   onClick={() => handleNav(btn.route)}
+                  aria-label={btn.label.replace(/\n/g, ' ')}
                   className="bg-white rounded-3xl shadow-sm border border-gray-100
                              flex flex-col items-center justify-center gap-3 select-none"
                   style={{ minHeight: '100px' }}

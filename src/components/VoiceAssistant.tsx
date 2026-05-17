@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mic, Volume2, VolumeX, RotateCcw, X, Loader2, AlertCircle } from 'lucide-react';
 import { triggerHapticFeedback } from '../lib/haptics';
@@ -43,6 +43,12 @@ export default function VoiceAssistant({ onClose }: Props) {
   const stopSpeaking = useCallback(() => {
     window.speechSynthesis?.cancel();
     setSpeaking(false);
+  }, []);
+
+  // 언마운트 시 TTS + SpeechRecognition 클린업
+  useEffect(() => () => {
+    window.speechSynthesis?.cancel();
+    srRef.current?.stop();
   }, []);
 
   const speakAnswer = useCallback((text: string) => {
@@ -116,9 +122,9 @@ export default function VoiceAssistant({ onClose }: Props) {
   const statusLabel: Record<Status, string> = {
     idle:        '마이크 버튼을 누르고\n말씀해 보세요',
     listening:   '듣고 있어요...\n말씀이 끝나면 자동으로 처리해요',
-    thinking:    'AI가 생각 중이에요...',
+    thinking:    '잠깐만 기다려 주세요...',
     done:        '답변이 준비됐어요',
-    error:       '인식하지 못했어요\n다시 눌러서 말씀해 보세요',
+    error:       '소리가 잘 들리지 않았어요.\n조금 더 크게 천천히 말씀해 주세요.',
     unsupported: '이 기기는 음성 인식을\n지원하지 않아요',
   };
 
