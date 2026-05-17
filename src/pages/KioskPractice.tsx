@@ -92,6 +92,26 @@ export default function KioskPractice() {
             </div>
           </motion.button>
 
+          {/* 중급 연습 */}
+          <motion.button
+            whileTap={{ scale: 0.97 }}
+            onClick={() => navigate('/kiosk-hospital')}
+            className="w-full bg-white border-2 border-blue-300 rounded-3xl p-5 text-left shadow-sm"
+            style={{ minHeight: '110px' }}
+          >
+            <div className="flex items-start gap-4">
+              <span style={{ fontSize: '40px' }}>💊</span>
+              <div>
+                <p style={{ fontSize: '22px', fontWeight: 'bold', color: '#1a1a1a' }}>
+                  중급 연습 (병원 무인접수기)
+                </p>
+                <p style={{ fontSize: '16px', color: '#6B7280', marginTop: '4px' }}>
+                  병원에서 자주 쓰는 무인접수기 연습이에요
+                </p>
+              </div>
+            </div>
+          </motion.button>
+
           {/* 심화 연습 */}
           <motion.button
             whileTap={{ scale: 0.97 }}

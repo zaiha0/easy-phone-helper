@@ -1,9 +1,9 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, type Variants } from 'framer-motion';
 import {
   Phone, MessageSquare, Image,
-  BookOpen, ShieldAlert, Settings, Car, MapPin, Bus, Monitor, Smartphone, HeartHandshake, Lightbulb,
+  BookOpen, ShieldAlert, Settings, Car, MapPin, Bus, Monitor, Smartphone, HeartHandshake, Lightbulb, Heart,
 } from 'lucide-react';
 import HelpRequestBar from '../components/HelpRequestBar';
 import { triggerHapticFeedback } from '../lib/haptics';
@@ -35,6 +35,8 @@ const mainButtons = [
   { label: '카톡\n연습하기', icon: HeartHandshake, iconBg: '#FEF9C3', iconColor: '#EAB308', route: '/kakao-practice' },
   { label: '택시 연습하기', icon: Car, iconBg: '#FFEDD5', iconColor: '#EA580C', route: '/taxi-practice' },
   { label: '키오스크\n연습', icon: Monitor, iconBg: '#FFF7ED', iconColor: '#EA580C', route: '/kiosk-practice' },
+  // 안전/응급
+  { label: '응급 도움', icon: Heart, iconBg: '#FEE2E2', iconColor: '#DC2626', route: '/emergency' },
   // 설정
   { label: '보호자 설정', icon: Settings, iconBg: '#FEF9C3', iconColor: '#CA8A04', route: '/guardian' },
   // 참고
@@ -49,14 +51,6 @@ const featuredItem: Variants = {
   hidden: { opacity: 0, scale: 0.9 },
   show: { opacity: 1, scale: 1, transition: { type: 'spring' as const, stiffness: 300, damping: 24 } },
 };
-const gridVariants: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.06 } },
-};
-const gridItem: Variants = {
-  hidden: { opacity: 0, y: 18 },
-  show: { opacity: 1, y: 0, transition: { type: 'spring' as const, stiffness: 280, damping: 24 } },
-};
 
 type FontSize = UserSettings['fontSize'];
 
@@ -66,9 +60,15 @@ const fontSizeOptions: { value: FontSize; label: string; ariaLabel: string }[] =
   { value: 'xlarge', label: '가', ariaLabel: '글자 크기 매우 크게' },
 ];
 
+const ITEMS_PER_PAGE = 6;
+
 export default function Home() {
   const navigate = useNavigate();
   const { fontSize, setFontSize } = useFontSize();
+  const [mainPage, setMainPage] = useState(0);
+
+  const totalPages = Math.ceil(mainButtons.length / ITEMS_PER_PAGE);
+  const visibleButtons = mainButtons.slice(mainPage * ITEMS_PER_PAGE, (mainPage + 1) * ITEMS_PER_PAGE);
 
   const handleNav = useCallback((route: string) => {
     triggerHapticFeedback();
@@ -147,21 +147,49 @@ export default function Home() {
         </div>
 
         <div>
-          <p className="font-bold text-gray-500 mb-3 px-1" style={{ fontSize: '15px' }}>주요 기능</p>
-          <motion.div variants={gridVariants} initial="hidden" animate="show" className="grid grid-cols-2 gap-3">
-            {mainButtons.map((btn) => {
+          {/* 섹션 헤더: 제목 + 페이지 도트 */}
+          <div className="flex items-center justify-between mb-3 px-1">
+            <p className="font-bold text-gray-500" style={{ fontSize: '15px' }}>주요 기능</p>
+            <div className="flex items-center gap-1.5">
+              {Array.from({ length: totalPages }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => { triggerHapticFeedback(); setMainPage(i); }}
+                  aria-label={`${i + 1}페이지`}
+                  style={{
+                    width: mainPage === i ? '20px' : '8px',
+                    height: '8px',
+                    borderRadius: '4px',
+                    backgroundColor: mainPage === i ? '#2563EB' : '#D1D5DB',
+                    transition: 'all 0.25s',
+                    border: 'none',
+                    cursor: 'pointer',
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* 그리드: visibleButtons만 렌더 */}
+          <motion.div
+            key={mainPage}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.2 }}
+            className="grid grid-cols-2 gap-3"
+          >
+            {visibleButtons.map((btn) => {
               const Icon = btn.icon;
               return (
                 <motion.button
                   key={btn.label}
-                  variants={gridItem}
                   whileTap={{ scale: 0.95 }}
                   whileHover={{ scale: 1.02 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                   onClick={() => handleNav(btn.route)}
                   aria-label={btn.label.replace(/\n/g, ' ')}
-                  className="bg-white rounded-3xl shadow-sm border border-gray-100
-                             flex flex-col items-center select-none"
+                  className="bg-white rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center select-none"
                   style={{ height: '108px', paddingTop: '16px', paddingBottom: '14px' }}
                 >
                   <div className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: btn.iconBg }}>
@@ -174,6 +202,39 @@ export default function Home() {
               );
             })}
           </motion.div>
+
+          {/* 이전 / 다음 버튼 */}
+          <div className="flex items-center justify-between mt-3 gap-3">
+            <motion.button
+              whileTap={{ scale: 0.96 }}
+              onClick={() => { triggerHapticFeedback(); setMainPage(p => Math.max(0, p - 1)); }}
+              disabled={mainPage === 0}
+              className="flex-1 rounded-2xl font-bold flex items-center justify-center gap-1"
+              style={{
+                minHeight: '52px', fontSize: '17px',
+                backgroundColor: mainPage === 0 ? '#F3F4F6' : '#EFF6FF',
+                color: mainPage === 0 ? '#D1D5DB' : '#2563EB',
+              }}
+            >
+              ← 이전
+            </motion.button>
+            <span className="font-bold text-gray-400" style={{ fontSize: '14px', flexShrink: 0 }}>
+              {mainPage + 1} / {totalPages}
+            </span>
+            <motion.button
+              whileTap={{ scale: 0.96 }}
+              onClick={() => { triggerHapticFeedback(); setMainPage(p => Math.min(totalPages - 1, p + 1)); }}
+              disabled={mainPage === totalPages - 1}
+              className="flex-1 rounded-2xl font-bold flex items-center justify-center gap-1"
+              style={{
+                minHeight: '52px', fontSize: '17px',
+                backgroundColor: mainPage === totalPages - 1 ? '#F3F4F6' : '#EFF6FF',
+                color: mainPage === totalPages - 1 ? '#D1D5DB' : '#2563EB',
+              }}
+            >
+              다음 →
+            </motion.button>
+          </div>
         </div>
 
       </main>

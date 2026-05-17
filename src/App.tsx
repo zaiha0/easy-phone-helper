@@ -17,6 +17,8 @@ import TaxiRealMode from './pages/TaxiRealMode';
 import Transport from './pages/Transport';
 import KioskPractice from './pages/KioskPractice';
 import KioskAdvanced from './pages/KioskAdvanced';
+import KioskHospital from './pages/KioskHospital';
+import EmergencyReady from './pages/EmergencyReady';
 import BasicOperations from './pages/BasicOperations';
 import FlashScreen from './pages/FlashScreen';
 import NotFound from './pages/NotFound';
@@ -43,6 +45,8 @@ function App() {
           <Route path="/transport" element={<Transport />} />
           <Route path="/kiosk-practice" element={<KioskPractice />} />
           <Route path="/kiosk-advanced" element={<KioskAdvanced />} />
+          <Route path="/kiosk-hospital" element={<KioskHospital />} />
+          <Route path="/emergency" element={<EmergencyReady />} />
           <Route path="/basics" element={<BasicOperations />} />
           <Route path="/flash" element={<FlashScreen />} />
           <Route path="*" element={<NotFound />} />
