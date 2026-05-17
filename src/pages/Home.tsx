@@ -161,13 +161,13 @@ export default function Home() {
                   onClick={() => handleNav(btn.route)}
                   aria-label={btn.label.replace(/\n/g, ' ')}
                   className="bg-white rounded-3xl shadow-sm border border-gray-100
-                             flex flex-col items-center justify-center gap-3 select-none"
-                  style={{ minHeight: '100px' }}
+                             flex flex-col items-center select-none"
+                  style={{ height: '108px', paddingTop: '16px', paddingBottom: '14px' }}
                 >
-                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center" style={{ backgroundColor: btn.iconBg }}>
+                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: btn.iconBg }}>
                     <Icon size={28} color={btn.iconColor} strokeWidth={2} />
                   </div>
-                  <span className="font-bold text-gray-800 text-center leading-tight whitespace-pre-line" style={{ fontSize: '17px' }}>
+                  <span className="mt-auto font-bold text-gray-800 text-center leading-tight whitespace-pre-line" style={{ fontSize: '15px' }}>
                     {btn.label}
                   </span>
                 </motion.button>
