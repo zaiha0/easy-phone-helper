@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, type Variants } from 'framer-motion';
 import {
-  Phone, MessageSquare, Image, Hospital,
+  Phone, MessageSquare, Image,
   BookOpen, ShieldAlert, Settings, Car, MapPin, Bus, Monitor, Smartphone, HeartHandshake, Lightbulb,
 } from 'lucide-react';
 import HelpRequestBar from '../components/HelpRequestBar';
@@ -12,8 +12,8 @@ import type { UserSettings } from '../types';
 
 const featuredGuides = [
   { label: '전화\n거는 법', icon: Phone, bg: 'from-blue-500 to-blue-600', route: '/phone' },
-  { label: '사기 문자\n확인하기', icon: ShieldAlert, bg: 'from-red-500 to-rose-600', route: '/scam-check' },
-  { label: '병원/약국\n찾기', icon: Hospital, bg: 'from-pink-500 to-rose-500', route: '/hospital' },
+  { label: '화면 조작법\n배우기', icon: Smartphone, bg: 'from-violet-500 to-purple-600', route: '/basics' },
+  { label: '보호자\n설정하기', icon: Settings, bg: 'from-emerald-500 to-green-600', route: '/guardian' },
 ];
 
 const mainButtons = [

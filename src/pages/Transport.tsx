@@ -135,10 +135,12 @@ export default function Transport() {
             어디로 가고 싶으세요?
           </p>
           <input
+            id="destination-input"
             type="text"
             value={destination}
             onChange={e => setDestination(e.target.value)}
             placeholder="예: 서울역, 강남구청, 이마트"
+            aria-label="목적지 입력"
             className="w-full border-2 border-gray-200 focus:border-green-400 rounded-2xl outline-none bg-gray-50"
             style={{ fontSize: '20px', minHeight: '58px', padding: '12px 16px' }}
           />

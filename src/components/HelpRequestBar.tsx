@@ -14,7 +14,7 @@ interface Props {
   aiContext?: string;
 }
 
-export default function HelpRequestBar({ guideTitle }: Props) {
+export default function HelpRequestBar({ guideTitle, aiContext }: Props) {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [noGuardianOpen, setNoGuardianOpen] = useState(false);
@@ -142,7 +142,7 @@ export default function HelpRequestBar({ guideTitle }: Props) {
 
       {/* ── AI 음성 비서 모달 ── */}
       <AnimatePresence>
-        {voiceOpen && <VoiceAssistant onClose={() => setVoiceOpen(false)} />}
+        {voiceOpen && <VoiceAssistant onClose={() => setVoiceOpen(false)} context={aiContext} />}
       </AnimatePresence>
 
       {/* ── 보호자 미등록 안내 모달 ── */}

@@ -31,9 +31,10 @@ function getSpeechRecognition(): (new () => SRInstance) | null {
 
 interface Props {
   onClose: () => void;
+  context?: string;
 }
 
-export default function VoiceAssistant({ onClose }: Props) {
+export default function VoiceAssistant({ onClose, context }: Props) {
   const [status, setStatus] = useState<Status>('idle');
   const [transcript, setTranscript] = useState('');
   const [answer, setAnswer] = useState('');
@@ -66,11 +67,11 @@ export default function VoiceAssistant({ onClose }: Props) {
 
   const sendToAI = useCallback(async (text: string) => {
     setStatus('thinking');
-    const result = await chatWithAI(text);
+    const result = await chatWithAI(text, context);
     setAnswer(result);
     setStatus('done');
     speakAnswer(result);
-  }, [speakAnswer]);
+  }, [speakAnswer, context]);
 
   const startListening = useCallback(() => {
     triggerHapticFeedback();

@@ -59,6 +59,8 @@ export default function PhoneScreen() {
               <button
                 key={p}
                 onClick={() => { triggerHapticFeedback(); setPlatform(p); }}
+                aria-pressed={platform === p}
+                aria-label={p === 'android' ? '안드로이드 갤럭시 선택' : '아이폰 선택'}
                 className="flex-1 rounded-xl font-bold transition-all"
                 style={{
                   height: '44px',

@@ -20,7 +20,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { message } = (req.body ?? {}) as { message?: unknown };
+  const { message, context } = (req.body ?? {}) as { message?: unknown; context?: unknown };
 
   if (!message || typeof message !== 'string' || !message.trim()) {
     return res.status(400).json({ answer: FALLBACK });
@@ -29,6 +29,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (message.length > 500) {
     return res.status(400).json({ answer: FALLBACK });
   }
+
+  // 현재 화면 컨텍스트를 유저 메시지 앞에 주입
+  const userContent = (context && typeof context === 'string' && context.trim())
+    ? `[현재 화면 상황: ${context.trim().slice(0, 200)}]\n\n사용자 질문: ${message.trim()}`
+    : message.trim();
 
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) {
@@ -41,7 +46,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       model: 'llama-3.3-70b-versatile',
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
-        { role: 'user', content: message.trim() },
+        { role: 'user', content: userContent },
       ],
       temperature: 0.6,
       max_tokens: 300,
